@@ -1,0 +1,110 @@
+"""Build a segmentation dataset from verified box labels.
+
+Boxes become filled rectangles in the mask. That is an approximation -- a box
+over a tilted or L-shaped array includes some roof -- so the model learns
+slightly generous footprints. They are still far tighter than the bounding
+boxes the current detector emits, which is the point: segmentation turns area
+from an upper bound into a measurement.
+
+Only fully-reviewed tiles are used. A tile with unreviewed boxes may hold an
+unlabelled panel, and in segmentation that pixel is explicitly taught to be
+background.
+
+    python scripts/prepare_masks.py --capture jbeil-nds --name jbeil_seg
+"""
+
+import argparse
+import json
+import shutil
+
+import _bootstrap  # noqa: F401
+
+import numpy as np
+from PIL import Image
+
+from solarmap.config import Config
+
+Image.MAX_IMAGE_PIXELS = None
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--capture", required=True)
+    ap.add_argument("--name", required=True)
+    ap.add_argument("--crop", type=int, default=512)
+    ap.add_argument("--overlap", type=float, default=0.5)
+    ap.add_argument("--val-frac", type=float, default=0.25)
+    ap.add_argument("--neg-frac", type=float, default=0.25,
+                    help="share of panel-free crops to keep, as negatives")
+    ap.add_argument("--seed", type=int, default=11)
+    ap.add_argument("--config")
+    args = ap.parse_args()
+
+    cfg = Config.load(args.config)
+    cap = cfg.path("captures") / args.capture
+    labels = json.loads((cap / "labels.json").read_text(encoding="utf-8"))
+    manifest = json.loads((cap / "manifest.json").read_text(encoding="utf-8"))
+    rng = np.random.default_rng(args.seed)
+
+    usable = []
+    for t in manifest["tiles"]:
+        boxes = labels["tiles"].get(t["tile_id"], [])
+        if boxes and any(b.get("verified") is None for b in boxes):
+            continue
+        panels = [b for b in boxes if b.get("verified") is True]
+        if panels:
+            usable.append((t["tile_id"], panels))
+
+    rng.shuffle(usable)
+    n_val = max(1, int(len(usable) * args.val_frac))
+    val_ids = {tid for tid, _ in usable[:n_val]}
+    print(f"{len(usable)} tiles with panels -> {len(val_ids)} held out")
+
+    root = cfg.path("datasets") / args.name
+    for split in ("train", "val"):
+        for sub in ("images", "masks"):
+            d = root / split / sub
+            if d.exists():
+                shutil.rmtree(d)
+            d.mkdir(parents=True, exist_ok=True)
+
+    counts = {"train": [0, 0], "val": [0, 0]}
+    S, step = args.crop, max(1, int(args.crop * (1 - args.overlap)))
+
+    for tid, panels in usable:
+        split = "val" if tid in val_ids else "train"
+        with Image.open(cap / "tiles" / f"{tid}.jpg") as im:
+            im = im.convert("RGB")
+            W, H = im.size
+            mask = np.zeros((H, W), np.uint8)
+            for b in panels:
+                mask[max(0, b["y1"]):b["y2"], max(0, b["x1"]):b["x2"]] = 255
+
+            for oy in range(0, max(1, H - S + 1), step):
+                for ox in range(0, max(1, W - S + 1), step):
+                    sub_mask = mask[oy:oy + S, ox:ox + S]
+                    # PIL.crop pads past the edge; the numpy slice does not.
+                    # Pad the mask to match, or albumentations rejects the pair.
+                    if sub_mask.shape != (S, S):
+                        padded = np.zeros((S, S), np.uint8)
+                        padded[:sub_mask.shape[0], :sub_mask.shape[1]] = sub_mask
+                        sub_mask = padded
+                    has = sub_mask.any()
+                    # Keep only a fraction of empty crops, or the model sees
+                    # almost nothing but background and predicts all-zero.
+                    if not has and rng.random() > args.neg_frac:
+                        continue
+                    name = f"{tid}_{ox}_{oy}"
+                    im.crop((ox, oy, ox + S, oy + S)).save(
+                        root / split / "images" / f"{name}.png")
+                    Image.fromarray(sub_mask).save(root / split / "masks" / f"{name}.png")
+                    counts[split][0] += 1
+                    counts[split][1] += int(has)
+
+    for split, (n, pos) in counts.items():
+        print(f"{split}: {n} crops ({pos} containing panels)")
+    print(f"-> {root}")
+
+
+if __name__ == "__main__":
+    main()

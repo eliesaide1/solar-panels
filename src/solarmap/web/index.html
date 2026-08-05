@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SolarMap</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root {
+    --bg: #10151c; --panel: #172029; --line: #26323f;
+    --ink: #e6edf3; --muted: #8b9bab;
+    --accent: #ffb020; --accent-ink: #1a1205;
+    --ok: #3fb950; --err: #f85149;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif;
+  }
+  #sidebar {
+    width: 340px; flex: none; overflow-y: auto;
+    background: var(--panel); border-right: 1px solid var(--line); padding: 18px;
+  }
+  #map { flex: 1; }
+  h1 { font-size: 17px; margin: 0 0 2px; letter-spacing: .2px; }
+  .sub { color: var(--muted); font-size: 12px; margin-bottom: 20px; }
+  h2 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .09em;
+    color: var(--muted); margin: 22px 0 10px; font-weight: 600;
+  }
+  label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+  input, select, button { font: inherit; }
+  input, select {
+    width: 100%; padding: 7px 9px; border-radius: 6px;
+    border: 1px solid var(--line); background: #0d1218; color: var(--ink);
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  button {
+    width: 100%; padding: 9px; border: 0; border-radius: 6px; cursor: pointer;
+    background: var(--accent); color: var(--accent-ink); font-weight: 650;
+    margin-top: 8px;
+  }
+  button.ghost { background: #202b36; color: var(--ink); font-weight: 500; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  #status {
+    margin-top: 14px; padding: 10px; border-radius: 6px; background: #0d1218;
+    border: 1px solid var(--line); font-size: 12px; min-height: 40px;
+  }
+  #bar { height: 4px; border-radius: 2px; background: #26323f; margin-top: 8px; overflow: hidden; }
+  #bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  .stat { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); }
+  .stat b { font-variant-numeric: tabular-nums; }
+  .err { color: var(--err); }
+  .warn { color: var(--accent); }
+  .empty {
+    padding: 12px; border-radius: 6px; background: #2a1f0a;
+    border: 1px solid #4a3a12; color: var(--accent); font-size: 12px;
+    line-height: 1.5;
+  }
+  .ok { color: var(--ok); }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .attrib { margin-top: 24px; font-size: 10px; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+<div id="sidebar">
+  <h1>SolarMap</h1>
+  <div class="sub">Rooftop solar panel detection from aerial imagery</div>
+
+  <h2>1 &middot; Area of interest</h2>
+  <button class="ghost" id="useView">Use current map view</button>
+  <div class="row" style="margin-top:8px">
+    <div><label>South</label><input id="south" type="number" step="any"></div>
+    <div><label>North</label><input id="north" type="number" step="any"></div>
+  </div>
+  <div class="row">
+    <div><label>West</label><input id="west" type="number" step="any"></div>
+    <div><label>East</label><input id="east" type="number" step="any"></div>
+  </div>
+  <div class="row">
+    <div><label>Name</label><input id="name" placeholder="my-suburb"></div>
+    <div><label>Imagery source</label><select id="backend"></select></div>
+  </div>
+  <div class="row" id="tileOpts">
+    <div><label>Target res (m/px)</label><input id="gsd" type="number" step="0.05" value="0.15"></div>
+    <div><label>Zoom (blank = auto)</label><input id="zoom" type="number" step="1"></div>
+  </div>
+  <div class="row" id="earthOpts" style="display:none">
+    <div><label>Eye altitude (m)</label><input id="alt" type="number" step="10"></div>
+    <div></div>
+  </div>
+  <div class="hint" id="aoiInfo"></div>
+  <button id="capture">Capture imagery</button>
+
+  <h2>2 &middot; Detect</h2>
+  <label>Capture</label>
+  <select id="captureSel"></select>
+  <label style="margin-top:8px">Model checkpoint</label>
+  <select id="ckptSel"></select>
+  <button id="detect">Run detection</button>
+
+  <div id="status">Idle.</div>
+  <div id="bar"><i></i></div>
+
+  <h2>3 &middot; Results</h2>
+  <div id="results"><div class="hint">No results loaded.</div></div>
+  <button class="ghost" id="download" disabled>Download GeoJSON</button>
+
+  <div class="attrib" id="attrib"></div>
+</div>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const api = async (url, opts) => {
+  const r = await fetch(url, opts);
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(body.detail || `HTTP ${r.status}`);
+  return body;
+};
+
+const map = L.map('map', { zoomControl: true }).setView([37.7749, -122.4194], 13);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19, attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+
+let aoiRect = null, tileLayer = null, detectLayer = null, currentCapture = null;
+
+// -- AOI ------------------------------------------------------------------
+
+function readAoi() {
+  const v = id => parseFloat($(id).value);
+  const b = { south: v('south'), west: v('west'), north: v('north'), east: v('east') };
+  return Object.values(b).every(Number.isFinite) ? b : null;
+}
+
+function drawAoi() {
+  const b = readAoi();
+  if (aoiRect) { map.removeLayer(aoiRect); aoiRect = null; }
+  if (!b || b.north <= b.south || b.east <= b.west) { $('aoiInfo').textContent = ''; return; }
+
+  aoiRect = L.rectangle([[b.south, b.west], [b.north, b.east]],
+    { color: '#ffb020', weight: 2, fill: false, dashArray: '5,5' }).addTo(map);
+
+  // Size estimate, so a careless AOI does not silently become an overnight
+  // job. The two backends have wildly different throughput.
+  const lat = (b.north + b.south) / 2;
+  const mLat = (b.north - b.south) * 111320;
+  const mLon = (b.east - b.west) * 111320 * Math.cos(lat * Math.PI / 180);
+  const km = `~${(mLat/1000).toFixed(2)} x ${(mLon/1000).toFixed(2)} km`;
+
+  if ($('backend').value === 'earth') {
+    const alt = parseFloat($('alt').value) || 150;
+    const step = alt * 1.6 * 0.8;             // view width at nadir, less overlap
+    const n = Math.ceil(mLat / step) * Math.ceil(mLon / step);
+    $('aoiInfo').textContent =
+      `${km} — roughly ${n} views, ~${Math.round(n * 4 / 60)} min ` +
+      `(Google Earth must stay untouched throughout).`;
+  } else {
+    // 256 px tiles, fetched in 4x4 blocks.
+    const gsd = parseFloat($('gsd').value) || 0.15;
+    const tiles = Math.ceil(mLat / (256 * gsd)) * Math.ceil(mLon / (256 * gsd));
+    const blocks = Math.ceil(tiles / 16);
+    $('aoiInfo').textContent =
+      `${km} — about ${tiles} tiles in ${blocks} blocks, ` +
+      `~${Math.max(1, Math.round(tiles / 8 / 60))} min.`;
+  }
+}
+
+['south','west','north','east','alt','gsd'].forEach(id => $(id).addEventListener('input', drawAoi));
+
+$('backend').onchange = () => {
+  const isEarth = $('backend').value === 'earth';
+  $('earthOpts').style.display = isEarth ? 'grid' : 'none';
+  $('tileOpts').style.display = isEarth ? 'none' : 'grid';
+  drawAoi();
+};
+
+$('useView').onclick = () => {
+  const b = map.getBounds();
+  $('south').value = b.getSouth().toFixed(6);
+  $('west').value  = b.getWest().toFixed(6);
+  $('north').value = b.getNorth().toFixed(6);
+  $('east').value  = b.getEast().toFixed(6);
+  drawAoi();
+};
+
+// -- status ---------------------------------------------------------------
+
+function setStatus(html, cls = '') {
+  $('status').innerHTML = `<span class="${cls}">${html}</span>`;
+}
+function setBar(frac) { $('bar').firstElementChild.style.width = `${Math.round(frac * 100)}%`; }
+
+async function pollJob(jobId, label) {
+  while (true) {
+    const j = await api(`/api/jobs/${jobId}`);
+    if (j.total) setBar(j.current / j.total);
+    if (j.status === 'running' || j.status === 'queued') {
+      setStatus(`${label}: ${j.current}/${j.total || '?'} ${j.message || ''}`);
+    } else if (j.status === 'done') {
+      setBar(1);
+      const r = j.result || {};
+      // "complete" alone reads as "found them" -- say what was actually found.
+      if (label === 'Detection') {
+        const n = r.detections ?? 0;
+        n === 0
+          ? setStatus(`${label} finished — <b>no solar panels found</b> ` +
+                      `in ${r.tiles_processed ?? '?'} tiles.`, 'warn')
+          : setStatus(`${label} finished — <b>${n}</b> array${n === 1 ? '' : 's'} found.`, 'ok');
+      } else {
+        setStatus(`${label} complete.`, 'ok');
+      }
+      return r;
+    } else {
+      setBar(0); setStatus(`${label} failed — ${j.message}`, 'err');
+      throw new Error(j.message);
+    }
+    await new Promise(r => setTimeout(r, 1000));
+  }
+}
+
+// -- actions --------------------------------------------------------------
+
+$('capture').onclick = async () => {
+  const b = readAoi();
+  if (!b) return setStatus('Set an area of interest first.', 'err');
+  const btn = $('capture'); btn.disabled = true;
+  try {
+    const job = await api('/api/capture', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...b,
+        name: $('name').value || 'aoi',
+        backend: $('backend').value,
+        eye_altitude_m: parseFloat($('alt').value) || null,
+        zoom: parseInt($('zoom').value) || null,
+        target_gsd_m: parseFloat($('gsd').value) || 0.15
+      })
+    });
+    await pollJob(job.id, 'Capture');
+    await loadCaptures();
+  } catch (e) { setStatus(e.message, 'err'); }
+  finally { btn.disabled = false; }
+};
+
+$('detect').onclick = async () => {
+  const name = $('captureSel').value;
+  if (!name) return setStatus('No capture selected.', 'err');
+  const btn = $('detect'); btn.disabled = true;
+  try {
+    const job = await api('/api/detect', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, checkpoint: $('ckptSel').value || null })
+    });
+    await pollJob(job.id, 'Detection');
+    await showCapture(name);
+  } catch (e) { setStatus(e.message, 'err'); }
+  finally { btn.disabled = false; }
+};
+
+$('captureSel').onchange = e => e.target.value && showCapture(e.target.value);
+$('download').onclick = () => currentCapture &&
+  window.open(`/api/captures/${currentCapture}/detections`, '_blank');
+
+// -- display --------------------------------------------------------------
+
+async function showCapture(name) {
+  currentCapture = name;
+  [tileLayer, detectLayer].forEach(l => l && map.removeLayer(l));
+  tileLayer = detectLayer = null;
+
+  const manifest = await api(`/api/captures/${name}/manifest`);
+  $('attrib').textContent = manifest.attribution || '';
+
+  // Captured imagery, each tile placed by the bounds recorded at capture time.
+  tileLayer = L.layerGroup(manifest.tiles.map(t =>
+    L.imageOverlay(`/api/captures/${name}/tiles/${t.image.split('/').pop()}`,
+      [[t.south, t.west], [t.north, t.east]], { opacity: 1 })
+  )).addTo(map);
+
+  const a = manifest.aoi;
+  map.fitBounds([[a.south, a.west], [a.north, a.east]]);
+
+  let gj = null;
+  try { gj = await api(`/api/captures/${name}/detections`); } catch { /* not run yet */ }
+
+  if (!gj) {
+    $('results').innerHTML = '<div class="hint">Captured, not yet detected.</div>';
+    $('download').disabled = true;
+    return;
+  }
+
+  detectLayer = L.geoJSON(gj, {
+    style: { color: '#00e5ff', weight: 2, fillColor: '#00e5ff', fillOpacity: 0.35 },
+    onEachFeature: (f, layer) => {
+      const p = f.properties;
+      layer.bindPopup(
+        `<b>${p.area_m2} m&sup2;</b><br>~${p.capacity_kw} kW<br>` +
+        `confidence ${(p.confidence * 100).toFixed(0)}%`
+      );
+    }
+  }).addTo(map);
+
+  const p = gj.properties || {};
+  if (!gj.features.length) {
+    // An empty result is a real answer; make it unmistakable rather than
+    // leaving a table of zeros that looks like a loading failure.
+    $('results').innerHTML = `
+      <div class="empty"><b>No solar panels found</b><br>
+      Detection ran over ${p.tiles_processed ?? '?'} tiles and found nothing.
+      There is nothing to show on the map.</div>
+      <div class="hint">This model was trained on utility-scale ground-mounted
+      solar farms, so it does not detect rooftop panels.</div>`;
+    $('download').disabled = true;
+    return;
+  }
+
+  $('results').innerHTML = `
+    <div class="stat"><span>Arrays detected</span><b>${p.detections ?? 0}</b></div>
+    <div class="stat"><span>Total area</span><b>${(p.total_area_m2 ?? 0).toLocaleString()} m&sup2;</b></div>
+    <div class="stat"><span>Est. capacity</span><b>${(p.total_capacity_kw ?? 0).toLocaleString()} kW</b></div>
+    <div class="stat"><span>Tiles processed</span><b>${p.tiles_processed ?? 0}</b></div>
+    <div class="hint">Capacity assumes ${p.kw_per_m2} kW/m&sup2; of array footprint.</div>`;
+  $('download').disabled = false;
+}
+
+async function loadCaptures() {
+  const list = await api('/api/captures');
+  $('captureSel').innerHTML = list.length
+    ? list.map(c => `<option value="${c.name}">${c.name} (${c.tile_count} tiles)${c.has_detections ? ' ✓' : ''}</option>`).join('')
+    : '<option value="">No captures yet</option>';
+}
+
+(async function init() {
+  const cfg = await api('/api/config');
+  $('alt').value = cfg.eye_altitude_m;
+  $('backend').innerHTML = cfg.backends.map(b =>
+    `<option value="${b.id}"${b.needs_token ? ' disabled' : ''}>` +
+    `${b.label}${b.max_zoom ? ` (z≤${b.max_zoom})` : ''}` +
+    `${b.needs_token ? ' — needs token' : ''}</option>`).join('');
+  $('ckptSel').innerHTML = cfg.checkpoints.length
+    ? cfg.checkpoints.map(c => `<option>${c}</option>`).join('')
+    : '<option value="">No trained model found</option>';
+  $('backend').onchange();
+  await loadCaptures();
+})();
+</script>
+</body>
+</html>

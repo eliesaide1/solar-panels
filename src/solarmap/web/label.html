@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SolarMap — label</title>
+<style>
+  :root {
+    --bg:#10151c; --panel:#172029; --line:#26323f; --ink:#e6edf3; --muted:#8b9bab;
+    --accent:#ffb020; --accent-ink:#1a1205; --ok:#3fb950; --err:#f85149;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{display:flex;background:var(--bg);color:var(--ink);
+       font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+  #side{width:290px;flex:none;overflow-y:auto;background:var(--panel);
+        border-right:1px solid var(--line);padding:16px}
+  #stage{flex:1;display:flex;align-items:center;justify-content:center;
+         overflow:auto;padding:16px;position:relative}
+  canvas{cursor:crosshair;max-width:100%;max-height:calc(100vh - 32px);
+         box-shadow:0 0 0 1px var(--line)}
+  h1{font-size:16px;margin:0 0 2px}
+  .sub{color:var(--muted);font-size:11px;margin-bottom:18px}
+  h2{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);
+     margin:18px 0 8px;font-weight:600}
+  button{width:100%;padding:8px;border:0;border-radius:6px;cursor:pointer;
+         background:var(--accent);color:var(--accent-ink);font-weight:650;margin-top:6px;font:inherit;font-weight:650}
+  button.ghost{background:#202b36;color:var(--ink);font-weight:500}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .stat{display:flex;justify-content:space-between;padding:4px 0;
+        border-bottom:1px solid var(--line);font-size:12px}
+  .stat b{font-variant-numeric:tabular-nums}
+  .hint{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+  kbd{background:#0d1218;border:1px solid var(--line);border-radius:3px;
+      padding:1px 5px;font-size:11px;font-family:inherit}
+  .legend{display:flex;align-items:center;gap:6px;font-size:11px;margin:3px 0}
+  .sw{width:14px;height:10px;border-radius:2px;border:2px solid}
+  #save{background:var(--ok);color:#04170a}
+</style>
+</head>
+<body>
+<div id="side">
+  <h1>Label</h1>
+  <div class="sub" id="capName"></div>
+
+  <h2>Tile</h2>
+  <select id="tileSel"></select>
+  <div class="row" style="margin-top:6px">
+    <button class="ghost" id="prev">&larr; Prev</button>
+    <button class="ghost" id="next">Next &rarr;</button>
+  </div>
+
+  <h2>Legend</h2>
+  <div class="legend"><span class="sw" style="border-color:#ffb020"></span> unreviewed</div>
+  <div class="legend"><span class="sw" style="border-color:#3fb950"></span> accepted — is a panel</div>
+  <div class="legend"><span class="sw" style="border-color:#f85149"></span> rejected — not a panel</div>
+
+  <h2>Controls</h2>
+  <div class="hint">
+    <kbd>click</kbd> a box to cycle unreviewed &rarr; accept &rarr; reject<br>
+    <kbd>drag</kbd> on empty space to draw a new box (accepted)<br>
+    <kbd>shift</kbd>+<kbd>click</kbd> a box to delete it<br>
+    <kbd>A</kbd> accept all &nbsp; <kbd>R</kbd> reject all<br>
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change tile
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button class="ghost" id="acceptAll">Accept all</button>
+    <button class="ghost" id="rejectAll">Reject all</button>
+  </div>
+  <button id="save">Save tile</button>
+
+  <h2>Progress</h2>
+  <div id="stats"></div>
+  <div class="hint" id="msg"></div>
+</div>
+
+<div id="stage"><canvas id="cv"></canvas></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+const CAP = params.get('capture');
+
+let data = null, tileIds = [], idx = 0, boxes = [], img = new Image();
+let drag = null, dirty = false;
+
+const cv = $('cv'), ctx = cv.getContext('2d');
+
+async function boot() {
+  if (!CAP) { $('msg').textContent = 'Add ?capture=NAME to the URL.'; return; }
+  $('capName').textContent = CAP;
+  data = await (await fetch(`/api/captures/${CAP}/labels`)).json();
+  const manifest = await (await fetch(`/api/captures/${CAP}/manifest`)).json();
+  // Follow manifest order so tiles advance geographically, not alphabetically.
+  tileIds = manifest.tiles.map(t => t.tile_id).filter(id => id in data.tiles);
+  $('tileSel').innerHTML = tileIds.map((id, i) =>
+    `<option value="${i}">${i + 1}/${tileIds.length} — ${id}</option>`).join('');
+  load(0);
+}
+
+function load(i) {
+  if (dirty && !confirm('This tile has unsaved changes. Discard them?')) return;
+  idx = Math.max(0, Math.min(i, tileIds.length - 1));
+  $('tileSel').value = idx;
+  const id = tileIds[idx];
+  boxes = JSON.parse(JSON.stringify(data.tiles[id] || []));
+  dirty = false;
+  img = new Image();
+  img.onload = () => { cv.width = img.width; cv.height = img.height; draw(); };
+  img.src = `/api/captures/${CAP}/tiles/${id}.jpg`;
+  stats();
+}
+
+function colorOf(b) {
+  return b.verified === true ? '#3fb950' : b.verified === false ? '#f85149' : '#ffb020';
+}
+
+function draw() {
+  ctx.drawImage(img, 0, 0);
+  ctx.lineWidth = 3;
+  for (const b of boxes) {
+    ctx.strokeStyle = colorOf(b);
+    ctx.strokeRect(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
+  }
+  if (drag) {
+    ctx.strokeStyle = '#3fb950';
+    ctx.setLineDash([6, 4]);
+    ctx.strokeRect(drag.x1, drag.y1, drag.x2 - drag.x1, drag.y2 - drag.y1);
+    ctx.setLineDash([]);
+  }
+}
+
+function stats() {
+  const acc = boxes.filter(b => b.verified === true).length;
+  const rej = boxes.filter(b => b.verified === false).length;
+  const un  = boxes.filter(b => b.verified == null).length;
+  let done = 0, total = 0;
+  for (const id of tileIds) {
+    const bs = data.tiles[id] || [];
+    total += bs.length;
+    done += bs.filter(b => b.verified != null).length;
+  }
+  $('stats').innerHTML =
+    `<div class="stat"><span>This tile</span><b>${boxes.length} boxes</b></div>
+     <div class="stat"><span>accepted / rejected</span><b>${acc} / ${rej}</b></div>
+     <div class="stat"><span>unreviewed here</span><b>${un}</b></div>
+     <div class="stat"><span>reviewed overall</span><b>${done} / ${total}</b></div>`;
+}
+
+// -- pointer ---------------------------------------------------------------
+
+function toCanvas(e) {
+  const r = cv.getBoundingClientRect();
+  return { x: (e.clientX - r.left) * (cv.width / r.width),
+           y: (e.clientY - r.top) * (cv.height / r.height) };
+}
+
+function hit(p) {
+  // Last drawn wins, so the topmost box is picked.
+  for (let i = boxes.length - 1; i >= 0; i--) {
+    const b = boxes[i];
+    if (p.x >= b.x1 && p.x <= b.x2 && p.y >= b.y1 && p.y <= b.y2) return i;
+  }
+  return -1;
+}
+
+cv.addEventListener('mousedown', e => {
+  const p = toCanvas(e), i = hit(p);
+  if (i >= 0) {
+    if (e.shiftKey) { boxes.splice(i, 1); }
+    else {
+      const b = boxes[i];
+      b.verified = b.verified == null ? true : b.verified === true ? false : null;
+    }
+    dirty = true; draw(); stats();
+    return;
+  }
+  drag = { x1: p.x, y1: p.y, x2: p.x, y2: p.y };
+});
+
+cv.addEventListener('mousemove', e => {
+  if (!drag) return;
+  const p = toCanvas(e); drag.x2 = p.x; drag.y2 = p.y; draw();
+});
+
+window.addEventListener('mouseup', () => {
+  if (!drag) return;
+  const x1 = Math.round(Math.min(drag.x1, drag.x2)), x2 = Math.round(Math.max(drag.x1, drag.x2));
+  const y1 = Math.round(Math.min(drag.y1, drag.y2)), y2 = Math.round(Math.max(drag.y1, drag.y2));
+  drag = null;
+  // Ignore stray clicks that produce a degenerate box.
+  if (x2 - x1 > 6 && y2 - y1 > 6) {
+    boxes.push({ x1, y1, x2, y2, score: 0, verified: true });
+    dirty = true; stats();
+  }
+  draw();
+});
+
+// -- actions ---------------------------------------------------------------
+
+$('acceptAll').onclick = () => { boxes.forEach(b => b.verified = true); dirty = true; draw(); stats(); };
+$('rejectAll').onclick = () => { boxes.forEach(b => b.verified = false); dirty = true; draw(); stats(); };
+$('prev').onclick = () => load(idx - 1);
+$('next').onclick = () => load(idx + 1);
+$('tileSel').onchange = e => load(+e.target.value);
+
+$('save').onclick = async () => {
+  const id = tileIds[idx];
+  const r = await fetch(`/api/captures/${CAP}/labels`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tile_id: id, boxes })
+  });
+  const j = await r.json();
+  data.tiles[id] = JSON.parse(JSON.stringify(boxes));
+  dirty = false;
+  $('msg').textContent = `Saved ${id} — ${j.accepted} accepted across the capture.`;
+  stats();
+};
+
+window.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowRight') load(idx + 1);
+  if (e.key === 'ArrowLeft') load(idx - 1);
+  if (e.key.toLowerCase() === 'a') $('acceptAll').click();
+  if (e.key.toLowerCase() === 'r') $('rejectAll').click();
+  if (e.key.toLowerCase() === 's') $('save').click();
+});
+
+boot();
+</script>
+</body>
+</html>

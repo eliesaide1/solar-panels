@@ -1,0 +1,131 @@
+# SolarMap configuration
+
+capture:
+  # Eye altitude above ground, in metres. Lower = finer ground sample distance.
+  # ~150 m on a 1920 px-wide window gives roughly 0.10 m/px.
+  eye_altitude_m: 150.0
+
+  # Fractional overlap between adjacent tiles. Overlap absorbs the edge
+  # distortion of Earth's perspective projection and stops panels that
+  # straddle a tile boundary from being cut in half.
+  overlap: 0.20
+
+  # Seconds to wait after streaming hits 100% before grabbing the frame.
+  # Google Earth reports 100% slightly before the final texture resolve.
+  settle_seconds: 1.5
+
+  # Give up on a tile if imagery has not finished streaming in this long.
+  stream_timeout_seconds: 45.0
+
+  # JPEG quality passed to SaveScreenShot (1-100).
+  jpeg_quality: 95
+
+  # Fraction of the screenshot to crop off each edge, to remove Google Earth's
+  # on-screen furniture (compass, status bar, attribution strip). Measure these
+  # once against your own window layout with scripts/calibrate_crop.py.
+  crop:
+    left: 0.0
+    right: 0.0
+    top: 0.0
+    bottom: 0.06   # status bar + attribution live along the bottom
+
+  # Hide these Google Earth layer groups before capturing, so vector overlays
+  # do not get baked into the imagery and confuse the model.
+  hide_layers:
+    - Borders and Labels
+    - Roads
+    - Places
+    - Photos
+    - 3D Buildings
+    - Weather
+    - Gallery
+
+# XYZ tile capture -- the alternative to the Google Earth Pro backend.
+# Exact georeferencing, parallel, resumable, nothing to install.
+tiles:
+  workers: 8
+  retries: 3
+  timeout: 20
+  jpeg_quality: 92
+  user_agent: "SolarMap/0.1 (solar panel mapping research)"
+
+tile_sources:
+  esri:
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 19
+    attribution: "Imagery (c) Esri, Maxar, Earthstar Geographics"
+
+  # Needs a free token from https://account.mapbox.com/. Reaches zoom 22 in
+  # many areas, and its terms cover commercial use.
+  mapbox:
+    url: "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={token}"
+    max_zoom: 22
+    attribution: "Imagery (c) Mapbox, Maxar"
+    token: ""            # paste your own from https://account.mapbox.com/
+
+  # US only, public domain, ~0.6 m. The cleanest licensing of the three.
+  naip:
+    url: "https://gis.apfo.usda.gov/arcgis/rest/services/NAIP/USDA_CONUS_PRIME/ImageServer/tile/{z}/{y}/{x}"
+    max_zoom: 18
+    attribution: "NAIP imagery, USDA Farm Production and Conservation"
+
+model:
+  encoder: resnet18
+  encoder_weights: imagenet
+  tile_size: 512
+  batch_size: 4
+  epochs: 45
+  lr: 0.0003
+  # Loss = bce_weight * BCE + (1 - bce_weight) * Dice
+  bce_weight: 0.5
+
+inference:
+  tile_size: 512
+  # Sliding-window stride. Less than tile_size means overlapping windows,
+  # which are averaged together to remove seam artefacts.
+  stride: 384
+  threshold: 0.5
+  # Discard detections smaller than this after polygonisation. A single
+  # residential module is ~1.6 m2, so this drops speckle without dropping
+  # real single-panel installations.
+  min_area_m2: 2.0
+  # Simplification tolerance for output polygons, in metres.
+  simplify_m: 0.25
+
+capacity:
+  # Nameplate capacity per square metre of array. Mainstream crystalline
+  # silicon modules run ~200-220 W/m2 of module area; derating to 190 W/m2
+  # accounts for inter-row and inter-module gaps included in the footprint.
+  kw_per_m2: 0.19
+
+paths:
+  captures: data/captures
+  datasets: data/datasets
+  checkpoints: models
+  outputs: data/outputs
+
+# YOLO detection backend (used when the selected checkpoint is an
+# Ultralytics model rather than a SolarMap U-Net).
+yolo:
+  conf: 0.08      # confidence threshold
+  iou: 0.45       # NMS IoU threshold
+  imgsz: 512      # MUST match the training imgsz. Measured: running the
+                  # 512-trained model at 1024 halves recall (0.41 -> 0.21)
+                  # and drops mAP50 from 0.33 to 0.09.
+  # Reject boxes covering more than this share of a tile. This model's
+  # signature false positive is a near-whole-frame box on imagery containing
+  # no panels. Set to 1.0 to disable.
+  max_frame_fraction: 0.6
+  # Scan each tile in overlapping windows of this size instead of whole-tile.
+  # Must match the crop size the model was trained on; 0 disables slicing.
+  slice: 512
+  slice_overlap: 0.3
+  # Box-classifier threshold for the cv+filter backend. Lower = more coverage,
+  # more false positives. Measured on Jbeil: 0.51 -> 84% coverage / 94% precision;
+  # 0.30 -> 88% / 57%; 0.22 -> 91% / 50%.
+  cv_conf: 0.51
+  # Probability cut for the patch-CNN backend (checkpoints named patchnet*.pt).
+  cnn_conf: 0.5
+  # Trace each panel's true outline instead of reporting its bounding box.
+  # Areas then become measurements rather than upper bounds.
+  outline: true
