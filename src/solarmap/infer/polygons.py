@@ -66,8 +66,13 @@ def polygons_to_features(
         ring = [(xmin + px * sx, ymax - py * sy) for px, py in pts]
         geom = Polygon(ring)
         if not geom.is_valid:
+            # buffer(0) repairs self-intersections but can split the shape into
+            # a MultiPolygon; keep the largest part so the output stays a
+            # single-ring Polygon, which everything downstream assumes.
             geom = geom.buffer(0)
-        if geom.is_empty:
+            if geom.geom_type == "MultiPolygon":
+                geom = max(geom.geoms, key=lambda g: g.area)
+        if geom.is_empty or geom.geom_type != "Polygon":
             continue
 
         geom_utm = shapely_transform(to_utm, geom)

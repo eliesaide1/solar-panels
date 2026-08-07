@@ -215,7 +215,16 @@ class CvFilterDetector:
         v = hsv[:, :, 2].astype(np.float32)
         s = hsv[:, :, 1].astype(np.float32)
         tex = texture_map(bgr, gsd)
+        # A glare rule was tried here -- sun reflecting off panel glass blows
+        # out to white and gets carved out of the outline. Including bright
+        # desaturated pixels near panels fixed the notches but dragged
+        # precision from 68% to 44%, because white rooftops adjacent to arrays
+        # came in too. Not worth it at this resolution.
         mask = ((v > 60) & (s < 32) & (tex > 16)).astype(np.uint8) * 255
+
+        # 2.2 m closing. Larger values bridge the sun-glare gaps inside an
+        # array, but also merge across roads and rooftops: 3.9 m dropped
+        # precision to 40%, 5.8 m to 25%.
         ck = texture_window_px(gsd * 0.78)
         ok = texture_window_px(gsd * 1.40)
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((ck, ck), np.uint8))
