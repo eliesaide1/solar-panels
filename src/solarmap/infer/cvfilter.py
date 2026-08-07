@@ -133,6 +133,39 @@ def propose(bgr: np.ndarray, gsd_m: float,
     return out
 
 
+def grid_features(gray_patch: np.ndarray) -> list[float]:
+    """How regular is the internal structure of this patch?
+
+    A PV array is a lattice of identical modules, so its autocorrelation has
+    strong off-centre peaks at the module pitch. A water tank, skylight or
+    HVAC unit is dark and roughly rectangular but has no repeating structure --
+    which is what the eye uses to tell them apart and what the colour/texture
+    features completely miss.
+    """
+    if gray_patch.size < 64 or min(gray_patch.shape) < 8:
+        return [0.0, 0.0, 0.0]
+
+    g = gray_patch.astype(np.float32)
+    g = g - g.mean()
+    if g.std() < 1e-6:
+        return [0.0, 0.0, 0.0]
+    g = g / g.std()
+
+    # Autocorrelation via FFT; the centre peak is the trivial zero-lag one.
+    f = np.fft.rfft2(g)
+    ac = np.fft.irfft2(f * np.conj(f), s=g.shape)
+    ac = np.fft.fftshift(ac) / g.size
+    cy, cx = ac.shape[0] // 2, ac.shape[1] // 2
+    ac[cy, cx] = 0.0
+
+    peak = float(ac.max())
+    # Directional energy: panel rows repeat along one axis more than the other.
+    row_e = float(np.abs(ac[cy, :]).mean())
+    col_e = float(np.abs(ac[:, cx]).mean())
+    anisotropy = abs(row_e - col_e) / max(row_e + col_e, 1e-6)
+    return [peak, max(row_e, col_e), anisotropy]
+
+
 def box_features(bgr: np.ndarray, tex: np.ndarray, b: dict, gsd: float):
     """Must stay identical to scripts/train_filter.py, or the model misreads its input."""
     H, W = bgr.shape[:2]
@@ -163,6 +196,11 @@ def box_features(bgr: np.ndarray, tex: np.ndarray, b: dict, gsd: float):
         w_m * h_m, long_s, long_s / short_s,
         float(b.get("score", 0.0)),
     ]
+    # Grid-periodicity features (autocorrelation peak / energy / anisotropy)
+    # were tried here to separate small arrays from water tanks. Cross-validated
+    # F1 rose 0.783 -> 0.796, but real detection F1 FELL 0.703 -> 0.612: the
+    # autocorrelation depends on exact box alignment, and inference-time
+    # proposals are not the boxes it trained on. See grid_features() above.
 
 
 class CvFilterDetector:

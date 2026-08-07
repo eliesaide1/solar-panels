@@ -158,9 +158,22 @@ def list_captures():
                 "tile_count": m.get("tile_count", 0),
                 "captured_at": m.get("captured_at"),
                 "has_detections": (d / "detections.geojson").is_file(),
+                # Surface the panel count so the picker shows results, not just
+                # how much imagery was captured.
+                "detections": _detection_count(d),
             }
         )
     return out
+
+
+def _detection_count(d: Path) -> int | None:
+    f = d / "detections.geojson"
+    if not f.is_file():
+        return None
+    try:
+        return int(json.loads(f.read_text(encoding="utf-8"))["properties"]["detections"])
+    except Exception:
+        return None
 
 
 @app.get("/api/captures/{name}/manifest")

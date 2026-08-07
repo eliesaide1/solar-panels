@@ -324,14 +324,21 @@ async function showCapture(name) {
     <div class="stat"><span>Total area</span><b>${(p.total_area_m2 ?? 0).toLocaleString()} m&sup2;</b></div>
     <div class="stat"><span>Est. capacity</span><b>${(p.total_capacity_kw ?? 0).toLocaleString()} kW</b></div>
     <div class="stat"><span>Tiles processed</span><b>${p.tiles_processed ?? 0}</b></div>
-    <div class="hint">Capacity assumes ${p.kw_per_m2} kW/m&sup2; of array footprint.</div>`;
+    <div class="stat"><span>Model</span><b>${p.checkpoint ?? '?'}</b></div>
+    <div class="hint">
+      Capacity assumes ${p.kw_per_m2} kW/m&sup2; of array footprint.
+      ${p.area_is_upper_bound
+        ? '<br><b>Areas are bounding-box upper bounds</b> — treat capacity as a maximum.'
+        : '<br>Areas are traced outlines, so they are measured rather than estimated.'}
+    </div>`;
   $('download').disabled = false;
 }
 
 async function loadCaptures() {
   const list = await api('/api/captures');
   $('captureSel').innerHTML = list.length
-    ? list.map(c => `<option value="${c.name}">${c.name} (${c.tile_count} tiles)${c.has_detections ? ' ✓' : ''}</option>`).join('')
+    ? list.map(c => `<option value="${c.name}">${c.name} — ${c.tile_count} tiles${
+        c.detections != null ? `, ${c.detections} panels` : ''}</option>`).join('')
     : '<option value="">No captures yet</option>';
 }
 

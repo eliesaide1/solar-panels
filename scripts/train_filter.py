@@ -30,10 +30,12 @@ from sklearn.model_selection import GroupKFold
 from sklearn.metrics import precision_recall_curve
 
 from solarmap.config import Config
+from solarmap.infer.cvfilter import box_features, texture_map
 
 
-def box_features(bgr: np.ndarray, tex: np.ndarray, b: dict, gsd: float) -> list[float]:
-    """Describe one candidate box: its own appearance and how it differs from context."""
+def _unused(bgr, tex, b, gsd):
+    """Superseded: features now live in solarmap.infer.cvfilter so training and
+    inference cannot drift apart."""
     H, W = bgr.shape[:2]
     x1, y1 = max(0, b["x1"]), max(0, b["y1"])
     x2, y2 = min(W, b["x2"]), min(H, b["y2"])
@@ -86,9 +88,7 @@ def main() -> None:
         img = cv2.imread(str(cap / "tiles" / f"{tid}.jpg"), cv2.IMREAD_COLOR)
         if img is None:
             continue
-        g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32)
-        mean = cv2.blur(g, (7, 7))
-        tex = np.sqrt(np.maximum(cv2.blur(g * g, (7, 7)) - mean * mean, 0))
+        tex = texture_map(img, gsd)
         for b in reviewed:
             f = box_features(img, tex, b, gsd)
             if f is None:
@@ -128,7 +128,8 @@ def main() -> None:
     order = np.argsort(-clf.feature_importances_)
     names = ["hue_mean","hue_std","sat_mean","sat_std","val_mean","val_std",
              "tex_mean","tex_std","tex_p90","sat_vs_ctx","val_vs_ctx",
-             "area_m2","long_side_m","aspect","cv_score"]
+             "area_m2","long_side_m","aspect","cv_score",
+             "grid_peak","grid_energy","grid_anisotropy"]
     print("\ntop features: " + ", ".join(
         f"{names[i]} {clf.feature_importances_[i]:.2f}" for i in order[:6]))
 
