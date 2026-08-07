@@ -196,6 +196,47 @@ Design decisions worth knowing:
   the inter-module gaps included in a detected footprint. Tune it against
   known installations in your region before quoting the numbers.
 
+## Measured results at Jbeil
+
+Validated against 244 hand-verified arrays at Notre Dame des Secours,
+re-derivable with `python scripts/evaluate.py --capture jbeil-nds`:
+
+```
+154 panels · 21,928 m2 · ~4.2 MW
+precision 67.8%   ·   73.1% of arrays located
+```
+
+Areas are traced outlines, so they are measurements rather than bounding-box
+upper bounds.
+
+### Four labelling rounds, and why they stopped helping
+
+| round | labels added | precision | arrays | F1 |
+|---|---|---|---|---|
+| 1 | — | 63.1% | 76.9% | 0.694 |
+| **2** | +16 / +13 | **67.8%** | **73.1%** | **0.703** |
+| 3 | +11 / −27 | 98.3% | 40.2% | 0.570 |
+| 4 | +10 / +69 | 89.6% | 41.4% | 0.566 |
+
+Rounds 3 and 4 added far more rejections than acceptances, and the classifier
+learned selectivity: precision rose, recall collapsed. Round 2 is shipped.
+Higher-precision variants are in `models/archive/` if a confirmed subset
+matters more than coverage.
+
+### Nine approaches that did not beat it
+
+YOLO fine-tuning (3 variants, best 15.6%/9.6%); a patch CNN (24% precision);
+U-Net on the Jbeil labels (IoU 0.39, overfit); U-Net on BDAPPV — 22,615
+European rooftops, val IoU 0.757, 91% recall on its own data, **1.7% at
+Jbeil**; glare handling (precision 68% → 44%); threshold sweeps (F1 falls
+monotonically); grid-periodicity features (cross-validated F1 up, real F1 down
+0.703 → 0.612); size-conditional thresholds (all below baseline).
+
+The binding constraint is resolution. At 24.7 cm/px a 30 m² array is 31×16
+pixels and measures the same as a rooftop water tank. Sub-15 cm imagery over
+Lebanon means a drone survey — Nearmap and Vexcel do not fly the region, and
+Pléiades Neo is 30 cm native.
+
 ## Imagery licensing
 
 Each source carries its own terms, and the manifest records the required
