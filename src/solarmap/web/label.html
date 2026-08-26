@@ -50,6 +50,8 @@
     <button class="ghost" id="prev">&larr; Prev</button>
     <button class="ghost" id="next">Next &rarr;</button>
   </div>
+  <button class="ghost" id="nextUnrev" style="width:100%;margin-top:6px">
+    Next unreviewed &rarr;</button>
 
   <h2>Legend</h2>
   <div class="legend"><span class="sw" style="border-color:#ffb020"></span> unreviewed</div>
@@ -62,7 +64,8 @@
     <kbd>drag</kbd> on empty space to draw a new box (accepted)<br>
     <kbd>shift</kbd>+<kbd>click</kbd> a box to delete it<br>
     <kbd>A</kbd> accept all &nbsp; <kbd>R</kbd> reject all<br>
-    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change tile
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> change tile &nbsp; <kbd>U</kbd> next unreviewed<br>
+    <kbd>S</kbd> save tile
   </div>
 
   <div class="row" style="margin-top:10px">
@@ -95,9 +98,33 @@ async function boot() {
   const manifest = await (await fetch(`/api/captures/${CAP}/manifest`)).json();
   // Follow manifest order so tiles advance geographically, not alphabetically.
   tileIds = manifest.tiles.map(t => t.tile_id).filter(id => id in data.tiles);
-  $('tileSel').innerHTML = tileIds.map((id, i) =>
-    `<option value="${i}">${i + 1}/${tileIds.length} — ${id}</option>`).join('');
+  refreshTileList();
   load(0);
+}
+
+function unreviewedIn(id) {
+  return (data.tiles[id] || []).filter(b => b.verified == null).length;
+}
+
+// Rebuilt after every save, so the markers track the work instead of the
+// state at page load.
+function refreshTileList() {
+  const keep = $('tileSel').value;
+  $('tileSel').innerHTML = tileIds.map((id, i) => {
+    const u = unreviewedIn(id);
+    return `<option value="${i}">${i + 1}/${tileIds.length} — ${id}` +
+           `${u ? `  ● ${u} left` : ''}</option>`;
+  }).join('');
+  if (keep !== '') $('tileSel').value = keep;
+}
+
+function nextUnreviewed() {
+  // Wrap around, so it keeps working from wherever you are.
+  for (let k = 1; k <= tileIds.length; k++) {
+    const i = (idx + k) % tileIds.length;
+    if (unreviewedIn(tileIds[i])) { load(i); return; }
+  }
+  $('msg').textContent = 'No unreviewed boxes left in this capture.';
 }
 
 function load(i) {
@@ -119,11 +146,14 @@ function colorOf(b) {
 
 function draw() {
   ctx.drawImage(img, 0, 0);
-  ctx.lineWidth = 3;
   for (const b of boxes) {
+    // Heavier outline on the undecided ones -- finding the last orange box
+    // among forty red ones is otherwise the slowest part of a sweep.
+    ctx.lineWidth = b.verified == null ? 6 : 3;
     ctx.strokeStyle = colorOf(b);
     ctx.strokeRect(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
   }
+  ctx.lineWidth = 3;
   if (drag) {
     ctx.strokeStyle = '#3fb950';
     ctx.setLineDash([6, 4]);
@@ -136,17 +166,22 @@ function stats() {
   const acc = boxes.filter(b => b.verified === true).length;
   const rej = boxes.filter(b => b.verified === false).length;
   const un  = boxes.filter(b => b.verified == null).length;
-  let done = 0, total = 0;
+  let done = 0, total = 0, openTiles = 0, openBoxes = 0, emptyTiles = 0;
   for (const id of tileIds) {
     const bs = data.tiles[id] || [];
     total += bs.length;
     done += bs.filter(b => b.verified != null).length;
+    const u = bs.filter(b => b.verified == null).length;
+    if (u) { openTiles++; openBoxes += u; }
+    if (!bs.length) emptyTiles++;
   }
   $('stats').innerHTML =
     `<div class="stat"><span>This tile</span><b>${boxes.length} boxes</b></div>
      <div class="stat"><span>accepted / rejected</span><b>${acc} / ${rej}</b></div>
      <div class="stat"><span>unreviewed here</span><b>${un}</b></div>
-     <div class="stat"><span>reviewed overall</span><b>${done} / ${total}</b></div>`;
+     <div class="stat"><span>reviewed overall</span><b>${done} / ${total}</b></div>
+     <div class="stat"><span>still to decide</span><b>${openBoxes} on ${openTiles} tiles</b></div>
+     <div class="stat"><span>tiles with no boxes</span><b>${emptyTiles}</b></div>`;
 }
 
 // -- pointer ---------------------------------------------------------------
@@ -204,6 +239,7 @@ $('acceptAll').onclick = () => { boxes.forEach(b => b.verified = true); dirty = 
 $('rejectAll').onclick = () => { boxes.forEach(b => b.verified = false); dirty = true; draw(); stats(); };
 $('prev').onclick = () => load(idx - 1);
 $('next').onclick = () => load(idx + 1);
+$('nextUnrev').onclick = () => nextUnreviewed();
 $('tileSel').onchange = e => load(+e.target.value);
 
 $('save').onclick = async () => {
@@ -216,6 +252,7 @@ $('save').onclick = async () => {
   data.tiles[id] = JSON.parse(JSON.stringify(boxes));
   dirty = false;
   $('msg').textContent = `Saved ${id} — ${j.accepted} accepted across the capture.`;
+  refreshTileList();
   stats();
 };
 
@@ -226,6 +263,7 @@ window.addEventListener('keydown', e => {
   if (e.key.toLowerCase() === 'a') $('acceptAll').click();
   if (e.key.toLowerCase() === 'r') $('rejectAll').click();
   if (e.key.toLowerCase() === 's') $('save').click();
+  if (e.key.toLowerCase() === 'u') nextUnreviewed();
 });
 
 boot();

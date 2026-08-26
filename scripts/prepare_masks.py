@@ -31,6 +31,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--capture", required=True)
     ap.add_argument("--name", required=True)
+    ap.add_argument("--labels", default="labels.json",
+                    help="label file to build masks from. On a resampled "
+                         "capture this is usually labels_clean.json -- its "
+                         "own labels.json is whatever the capture shipped with.")
     ap.add_argument("--crop", type=int, default=512)
     ap.add_argument("--overlap", type=float, default=0.5)
     ap.add_argument("--val-frac", type=float, default=0.25)
@@ -42,7 +46,7 @@ def main() -> None:
 
     cfg = Config.load(args.config)
     cap = cfg.path("captures") / args.capture
-    labels = json.loads((cap / "labels.json").read_text(encoding="utf-8"))
+    labels = json.loads((cap / args.labels).read_text(encoding="utf-8"))
     manifest = json.loads((cap / "manifest.json").read_text(encoding="utf-8"))
     rng = np.random.default_rng(args.seed)
 
