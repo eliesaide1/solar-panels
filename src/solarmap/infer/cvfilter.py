@@ -46,41 +46,77 @@ def texture_map(bgr: np.ndarray, gsd_m: float = 0.247) -> np.ndarray:
     return np.sqrt(np.maximum(cv2.blur(g * g, (k, k)) - mean * mean, 0))
 
 
-def propose_rich(bgr: np.ndarray, gsd_m: float,
-                 min_area_m2: float = 4.0, max_area_m2: float = 8000.0) -> list[dict]:
-    """Candidate boxes with thresholds relaxed for maximum recall.
+# Mask and filter settings per proposal style. These live in one place because
+# `predict_polygons` has to reproduce EXACTLY the candidate population the
+# classifier was trained on -- see CvFilterDetector. Both sets were measured on
+# Esri 24.7 cm/px and do not transfer to sharper imagery: at 6 cm the module
+# grid, the gaps and the glare are all resolved, the mask floods, and a sweep of
+# 108 threshold combinations found nothing that keeps both coverage and shape
+# (best: 87.5% of arrays covered with 0.6% of proposals panel-shaped).
+# Re-derive them per resolution with scripts/tune_proposals.py.
+PROPOSAL_PARAMS = {
+    "tight": dict(v_min=60, s_max=32, tex_min=16, close=0.78, open=1.40,
+                  min_area_m2=8.0, fill=0.25, aspect=12),
+    "rich": dict(v_min=50, s_max=60, tex_min=10, close=0.78, open=2.30,
+                 min_area_m2=4.0, fill=0.15, aspect=15),
+}
 
-    Measured on the Jbeil labels: these settings put a candidate on 100% of
-    verified panels (versus ~96% for the tighter `propose`), at the cost of
-    roughly twice as many candidates. That trade is right when a trained
-    classifier does the discarding -- a panel with no candidate can never be
-    recovered, but a spurious candidate merely has to be rejected.
-    """
+
+def candidate_mask(bgr: np.ndarray, gsd_m: float, style: str):
+    """Binary candidate mask plus the texture map it was built from."""
+    p = PROPOSAL_PARAMS[style]
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
     v = hsv[:, :, 2].astype(np.float32)
     s = hsv[:, :, 1].astype(np.float32)
     tex = texture_map(bgr, gsd_m)
 
-    mask = ((v > 50) & (s < 60) & (tex > 10)).astype(np.uint8) * 255
-    ck = texture_window_px(gsd_m * 0.78)
-    ok = texture_window_px(gsd_m * 2.30)
+    mask = ((v > p["v_min"]) & (s < p["s_max"]) &
+            (tex > p["tex_min"])).astype(np.uint8) * 255
+    ck = texture_window_px(gsd_m * p["close"])
+    ok = texture_window_px(gsd_m * p["open"])
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((ck, ck), np.uint8))
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((ok, ok), np.uint8))
+    return mask, tex
 
+
+def _components(mask, tex, gsd_m: float, style: str,
+                min_area_m2: float | None, max_area_m2: float):
+    p = PROPOSAL_PARAMS[style]
+    lo = p["min_area_m2"] if min_area_m2 is None else min_area_m2
     px_area = gsd_m * gsd_m
-    out = []
+    out, comps = [], []
     n, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
     for i in range(1, n):
         x, y, w, h, a = stats[i]
-        if not (min_area_m2 <= a * px_area <= max_area_m2):
+        if not (lo <= a * px_area <= max_area_m2):
             continue
-        if a / float(w * h) < 0.15:
+        if a / float(w * h) < p["fill"]:
             continue
-        if max(w, h) / max(min(w, h), 1) > 15:
+        if max(w, h) / max(min(w, h), 1) > p["aspect"]:
             continue
         out.append({"x1": int(x), "y1": int(y), "x2": int(x + w), "y2": int(y + h),
                     "score": float(tex[labels == i].mean())})
-    return out
+        comps.append((labels[y:y + h, x:x + w] == i, int(x), int(y)))
+    return out, comps
+
+
+def propose_rich(bgr: np.ndarray, gsd_m: float,
+                 min_area_m2: float | None = None,
+                 max_area_m2: float = 8000.0) -> list[dict]:
+    """Candidate boxes with thresholds relaxed for maximum recall.
+
+    Measured on the Jbeil labels at 24.7 cm/px: these settings put a candidate
+    on 100% of verified panels (versus ~96% for the tighter `propose`), at the
+    cost of roughly twice as many candidates. That trade is right when a
+    trained classifier does the discarding -- a panel with no candidate can
+    never be recovered, but a spurious candidate merely has to be rejected.
+
+    This does NOT hold at higher resolution: on 6 cm Mapbox imagery the relaxed
+    mask floods and merges each array into its rooftop, so it covers 95% of
+    arrays but only 14 candidates in 859 are more than half panel.
+    """
+    mask, tex = candidate_mask(bgr, gsd_m, "rich")
+    return _components(mask, tex, gsd_m, "rich", min_area_m2, max_area_m2)[0]
 
 
 def _contour_of(component_mask, ox: int, oy: int, simplify_px: float):
@@ -104,33 +140,11 @@ def _contour_of(component_mask, ox: int, oy: int, simplify_px: float):
 
 
 def propose(bgr: np.ndarray, gsd_m: float,
-            min_area_m2: float = 8.0, max_area_m2: float = 8000.0) -> list[dict]:
+            min_area_m2: float | None = None,
+            max_area_m2: float = 8000.0) -> list[dict]:
     """Candidate boxes from colour and texture. Deliberately over-generates."""
-    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-    v = hsv[:, :, 2].astype(np.float32)
-    s = hsv[:, :, 1].astype(np.float32)
-    tex = texture_map(bgr, gsd_m)
-
-    mask = ((v > 60) & (s < 32) & (tex > 16)).astype(np.uint8) * 255
-    ck = texture_window_px(gsd_m * 0.78)     # ~2.2 m closing
-    ok = texture_window_px(gsd_m * 1.40)     # ~1.25 m opening
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((ck, ck), np.uint8))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((ok, ok), np.uint8))
-
-    px_area = gsd_m * gsd_m
-    out = []
-    n, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
-    for i in range(1, n):
-        x, y, w, h, a = stats[i]
-        if not (min_area_m2 <= a * px_area <= max_area_m2):
-            continue
-        if a / float(w * h) < 0.25:
-            continue
-        if max(w, h) / max(min(w, h), 1) > 12:
-            continue
-        out.append({"x1": int(x), "y1": int(y), "x2": int(x + w), "y2": int(y + h),
-                    "score": float(tex[labels == i].mean())})
-    return out
+    mask, tex = candidate_mask(bgr, gsd_m, "tight")
+    return _components(mask, tex, gsd_m, "tight", min_area_m2, max_area_m2)[0]
 
 
 def grid_features(gray_patch: np.ndarray) -> list[float]:
@@ -215,7 +229,8 @@ class CvFilterDetector:
         self.gsd = float(blob.get("gsd", 0.25))
         # Models trained on rich proposals must be fed rich proposals; mixing
         # the two shifts the feature distribution the classifier learned.
-        self.proposer = propose_rich if blob.get("proposals") == "rich" else propose
+        self.style = "rich" if blob.get("proposals") == "rich" else "tight"
+        self.proposer = propose_rich if self.style == "rich" else propose
 
     def predict_boxes(self, image: np.ndarray, gsd_m: float | None = None,
                       **_ignored) -> list[tuple[float, float, float, float, float]]:
@@ -249,42 +264,29 @@ class CvFilterDetector:
         gsd = float(gsd_m or self.gsd)
         bgr = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-        v = hsv[:, :, 2].astype(np.float32)
-        s = hsv[:, :, 1].astype(np.float32)
-        tex = texture_map(bgr, gsd)
-        # A glare rule was tried here -- sun reflecting off panel glass blows
-        # out to white and gets carved out of the outline. Including bright
-        # desaturated pixels near panels fixed the notches but dragged
+        # Must be the SAME candidate population predict_boxes would build, or
+        # the classifier scores a feature distribution it never trained on.
+        # This previously hardcoded the tight mask, so every model trained by
+        # train_filter2.py -- which uses rich proposals and records
+        # "proposals": "rich" -- was silently mis-fed in outline mode, which is
+        # the shipping default.
+        #
+        # A glare rule was tried in this mask -- sun reflecting off panel glass
+        # blows out to white and gets carved out of the outline. Including
+        # bright desaturated pixels near panels fixed the notches but dragged
         # precision from 68% to 44%, because white rooftops adjacent to arrays
         # came in too. Not worth it at this resolution.
-        mask = ((v > 60) & (s < 32) & (tex > 16)).astype(np.uint8) * 255
-
-        # 2.2 m closing. Larger values bridge the sun-glare gaps inside an
-        # array, but also merge across roads and rooftops: 3.9 m dropped
+        #
+        # The closing is 2.2 m. Larger values bridge the sun-glare gaps inside
+        # an array, but also merge across roads and rooftops: 3.9 m dropped
         # precision to 40%, 5.8 m to 25%.
-        ck = texture_window_px(gsd * 0.78)
-        ok = texture_window_px(gsd * 1.40)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((ck, ck), np.uint8))
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((ok, ok), np.uint8))
-
-        px_area = gsd * gsd
-        # 0.4 m: enough to drop pixel staircasing, not enough to round corners.
-        simplify_px = max(1.0, 0.4 / gsd)
-
-        n, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
-        cands, comps = [], []
-        for i in range(1, n):
-            x, y, w, h, a = stats[i]
-            if not (8.0 <= a * px_area <= 8000.0):
-                continue
-            if a / float(w * h) < 0.25 or max(w, h) / max(min(w, h), 1) > 12:
-                continue
-            cands.append({"x1": int(x), "y1": int(y), "x2": int(x + w), "y2": int(y + h),
-                          "score": float(tex[labels == i].mean())})
-            comps.append((labels[y:y + h, x:x + w] == i, int(x), int(y)))
+        mask, tex = candidate_mask(bgr, gsd, self.style)
+        cands, comps = _components(mask, tex, gsd, self.style, None, 8000.0)
         if not cands:
             return []
+
+        # 0.4 m: enough to drop pixel staircasing, not enough to round corners.
+        simplify_px = max(1.0, 0.4 / gsd)
 
         feats, keep = [], []
         for b, cm in zip(cands, comps):
