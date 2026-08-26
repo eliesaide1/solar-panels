@@ -36,13 +36,18 @@ def main() -> None:
                     help="detection files to union, as capture:filename")
     ap.add_argument("--out", default="det_union.geojson")
     ap.add_argument("--min-area-m2", type=float, default=2.0)
+    ap.add_argument("--min-sources", type=int, default=1,
+                    help="how many input layers must cover a shape for it to "
+                         "survive. 1 unions them; 2 keeps only what two models "
+                         "independently agree on, which trades recall for "
+                         "precision and is usually what a demo wants.")
     ap.add_argument("--config")
     args = ap.parse_args()
 
     cfg = Config.load(args.config)
     dst = cfg.path("captures") / args.into
 
-    polys, n_in = [], 0
+    polys, n_in, layers = [], 0, []
     kw_per_m2 = float(cfg["capacity"]["kw_per_m2"])
     for spec in args.sources:
         cap_name, _, fname = spec.partition(":")
@@ -53,12 +58,15 @@ def main() -> None:
         feats = gj.get("features", [])
         n_in += len(feats)
         print(f"  {cap_name}/{path.name}: {len(feats)} detections")
+        layer = []
         for f in feats:
             g = shape(f["geometry"])
             if not g.is_valid:
                 g = g.buffer(0)
             if not g.is_empty:
                 polys.append(g)
+                layer.append(g)
+        layers.append(unary_union(layer) if layer else None)
 
     if not polys:
         raise SystemExit("Nothing to merge.")
@@ -66,6 +74,16 @@ def main() -> None:
     merged = unary_union(polys)
     parts = list(getattr(merged, "geoms", [merged]))
     print(f"\n{n_in} detections -> {len(parts)} after dissolving overlaps")
+
+    if args.min_sources > 1:
+        kept = []
+        for g in parts:
+            votes = sum(1 for lay in layers if lay is not None and g.intersects(lay))
+            if votes >= args.min_sources:
+                kept.append(g)
+        print(f"{len(kept)} survive agreement by >= {args.min_sources} of "
+              f"{len(layers)} layers")
+        parts = kept
 
     # Areas are only meaningful in metres, so measure in the capture's own
     # projected CRS rather than in degrees. The manifest carries the projected

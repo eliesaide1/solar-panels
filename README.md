@@ -280,7 +280,9 @@ python scripts/score_arrays.py --capture jbeil-mb-104 --labels labels_clean.json
 
 | detector | array recall | detection precision | F1 |
 |---|---|---|---|
-| **fine-tuned ensemble @ 0.85** | **58.5%** | **72.1%** | **0.646** |
+| **fine-tuned pair, agreeing** | **56.5%** | **85.9%** | **0.682** |
+| fine-tuned pair, agreeing (coverage-first) | 62.1% | 75.9% | 0.683 |
+| fine-tuned pair, unioned | 58.5% | 72.1% | 0.646 |
 | U-Net fine-tuned (single-scale base) @ 0.85 | 50.7% | 78.0% | 0.614 |
 | U-Net fine-tuned (multi-scale base) @ 0.50 | 60.1% | 58.2% | 0.591 |
 | U-Net BDAPPV, no fine-tune @ 10.4 cm | 23.2% | 96.5% | 0.374 |
@@ -288,13 +290,23 @@ python scripts/score_arrays.py --capture jbeil-mb-104 --labels labels_clean.json
 | cv+filter @ 6.2 cm | 11.2% | 16.7% | 0.134 |
 | U-Net BDAPPV, no fine-tune @ 6.2 cm | 0.6% | 86.7% | 0.013 |
 
-The shipped detector is the **ensemble**: two U-Nets whose masks are dissolved
-into one layer by `scripts/merge_detections.py`. They differ only in how long
+The shipped detector runs **two U-Nets and keeps only what both of them find**
+(`scripts/merge_detections.py --min-sources 2`). They differ only in how long
 their BDAPPV stage ran and whether it used scale augmentation, which is enough
-to make them miss different arrays — and that diversity is worth more than any
-threshold setting. Either one alone gives up 3–8 points of recall.
+to make them fail on different roofs.
 
-**Fine-tuning on local labels is what moved this**, from 23.2% to 58.5% recall.
+**Agreement beats union, on both axes at once.** Unioning the same two models
+gives 58.5%/72.1%; requiring them to agree gives 56.5%/**85.9%** — and a second
+operating point, 62.1%/75.9%, beats the union on recall *and* precision
+simultaneously. A false positive has to fool two independently pretrained
+models rather than one, and that is a much harder thing to do. Agreement also
+halves the detection count (135 against 258), which matters when a human is
+reviewing the output.
+
+Pick the operating point for the job: **56.5%/85.9%** when the map is being
+shown or the figures quoted, **62.1%/75.9%** when coverage matters more.
+
+**Fine-tuning on local labels is what moved this**, from 23.2% to 56.5% recall.
 Nothing else in three months of work came close, which is the argument for
 labelling each new region rather than hoping a model transfers into it.
 
@@ -341,10 +353,24 @@ Measured, that theory is only slightly true:
 The union beats every single resolution on recall, but its F1 is flat, and
 60.1%/59.4% is the same trade as running one resolution at threshold 0.50. It
 costs three times the inference for 3–4 points of recall at matched precision.
-Combining two *different models* at the same resolution gains far more
-(0.646 against 0.614 and 0.591), because they were pretrained differently and
-therefore fail differently. Diversity of error is what an ensemble monetises,
-and resolution barely provides any.
+
+Combining two *different models* at the same resolution gains far more (0.682
+against 0.614 and 0.591). Diversity of error is what an ensemble monetises, and
+two separately pretrained models provide plenty of it; the same model shown the
+same roof at 8 and 12 cm provides very little, because it fails the same way
+both times.
+
+**How the layers are combined matters as much as what is in them.** Union
+maximises recall and lets any single model's mistakes through; agreement
+(`--min-sources 2`) keeps only what both found and is better on both axes:
+
+| combination | recall | precision | F1 |
+|---|---|---|---|
+| union @0.85 | 58.5% | 72.1% | 0.646 |
+| agree @0.85 | 51.3% | 88.0% | 0.648 |
+| agree, 0.85 + 0.70 | 56.5% | 85.9% | 0.682 |
+| agree @0.70 | 62.1% | 75.9% | 0.683 |
+| agree, 2 of 3 layers | 67.6% | 66.1% | 0.669 |
 
 ### Resolution is a tuning parameter, and it has a peak
 
@@ -443,15 +469,17 @@ segmentation.
 ### What would get this past 60%
 
 Every cheap lever has been pulled and measured: threshold tuning, resolution
-ensembling, model ensembling. They are all in the tables above, and together
-they took recall from 23.2% to 58.5%.
+ensembling, model ensembling, and how the ensemble combines. They are all in
+the tables above, and together they took the detector from 23.2% of arrays at
+96.5% precision to **56.5% at 85.9%** — or 62.1% at 75.9% if coverage is worth
+more than a clean map.
 
 What remains is data. Jbeil holds **242 arrays/km²**, so the 1.3 km² labelled
 here yielded 312 arrays; BDAPPV needed 22,615 rooftops to reach 91% recall on
 its own imagery. Roughly **6 km²** would give ~1,500 local arrays, which is the
 next honest step toward a survey-grade number.
 
-The next pass is cheaper than this one was. A 72%-precision model can seed it,
+The next pass is cheaper than this one was. An 86%-precision model can seed it,
 which is a different proposition from the classical proposer that does not
 function at 6 cm — the labeller confirms a good model's output instead of
 adjudicating a bad heuristic's.

@@ -9,8 +9,11 @@ data/datasets/
 data/outputs/
 data/raw/
 
-# Model checkpoints
+# Model checkpoints. Note the .zip: a torch checkpoint IS a zip archive, and
+# downloads from Colab or Kaggle often arrive with that extension -- which
+# slipped past a *.pt-only rule and nearly put 98 MB into a commit.
 models/*.pt
+models/*.zip
 
 # Model artefacts and archived experiments
 models/*.pkl
