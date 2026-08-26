@@ -232,7 +232,10 @@ class TileCapture:
             "source": f"XYZ tiles: {self.source.name}",
             "attribution": self.source.attribution,
             "zoom": zoom,
-            "gsd_m": gsd,
+            # The tiles know the true resolution: a source serving "@2x" tiles
+            # returns twice the pixels over the same ground, so the zoom-only
+            # figure would understate it by 2x. Report what is on disk.
+            "gsd_m": records[0]["gsd_m"] if records else gsd,
             "block_tiles": block,
             "tile_count": len(records),
             "failed": failures,

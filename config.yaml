@@ -70,7 +70,11 @@ tile_sources:
     attribution: "NAIP imagery, USDA Farm Production and Conservation"
 
 model:
-  encoder: resnet18
+  # Must match notebooks/train_solarmap.ipynb, which produced every checkpoint
+  # in models/. Inference reads the encoder from the checkpoint itself, so a
+  # mismatch here only bites when training locally -- silently building a
+  # different network than the notebook did.
+  encoder: resnet34
   encoder_weights: imagenet
   tile_size: 512
   batch_size: 4

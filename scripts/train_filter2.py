@@ -55,7 +55,12 @@ def main() -> None:
     cap = cfg.path("captures") / args.capture
     labels = json.loads((cap / "labels.json").read_text(encoding="utf-8"))
     manifest = json.loads((cap / "manifest.json").read_text(encoding="utf-8"))
-    gsd = float(manifest["gsd_m"])
+    # Per-tile gsd is authoritative: an "@2x" source returns twice the
+    # pixels over the same ground, and older manifests stored the
+    # zoom-only figure, which understates it by 2x. cvfilter sizes its
+    # kernels in metres, so a wrong gsd silently distorts every proposal.
+    tiles = manifest["tiles"]
+    gsd = float((tiles[0].get("gsd_m") if tiles else None) or manifest["gsd_m"])
 
     X, y, groups = [], [], []
     n_prop = n_amb = 0
