@@ -100,6 +100,13 @@
   <label style="margin-top:8px">Model checkpoint</label>
   <select id="ckptSel"></select>
   <button id="detect">Run detection</button>
+  <div class="empty" id="detectWarn" style="margin-top:8px; display:none">
+    <b>This will replace the current layer.</b>
+    Running one checkpoint overwrites <code>detections.geojson</code>, and the
+    layer on the map is a four-model ensemble that no single checkpoint here can
+    reproduce &mdash; every one of them scores lower on its own. Re-run it with
+    <code>scripts/merge_detections.py</code> afterwards, or keep a copy first.
+  </div>
 
   <div id="status">Idle.</div>
   <div id="bar"><i></i></div>
@@ -128,6 +135,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 let aoiRect = null, tileLayer = null, detectLayer = null, currentCapture = null;
+let currentLayerProps = null;   // properties of the drawn layer, for the overwrite guard
 
 // -- AOI ------------------------------------------------------------------
 
@@ -242,7 +250,7 @@ $('capture').onclick = async () => {
       })
     });
     await pollJob(job.id, 'Capture');
-    await loadCaptures();
+    await loadCaptures($('name').value.trim() || undefined);
   } catch (e) { setStatus(e.message, 'err'); }
   finally { btn.disabled = false; }
 };
@@ -250,6 +258,26 @@ $('capture').onclick = async () => {
 $('detect').onclick = async () => {
   const name = $('captureSel').value;
   if (!name) return setStatus('No capture selected.', 'err');
+
+  // A single checkpoint cannot reproduce an ensemble layer, so running one
+  // here silently downgrades the map -- which is exactly what happened once,
+  // replacing a curated four-model result with a 50-polygon classical run.
+  // Confirm against what is actually on screen rather than warning in general.
+  const cur = currentLayerProps;
+  if (cur && /ensemble|union|CURATED|SURVEY|,/.test(String(cur.checkpoint || ''))) {
+    const ok = confirm(
+      `The layer on the map now is:
+
+  ${cur.checkpoint}
+  ` +
+      `${cur.detections} arrays
+
+` +
+      `Running "${$('ckptSel').value}" alone will overwrite it, and a single ` +
+      `checkpoint cannot reproduce it. Continue?`);
+    if (!ok) return setStatus('Cancelled — layer kept.', 'ok');
+  }
+
   const btn = $('detect'); btn.disabled = true;
   try {
     const job = await api('/api/detect', {
@@ -287,6 +315,11 @@ async function showCapture(name) {
 
   let gj = null;
   try { gj = await api(`/api/captures/${name}/detections`); } catch { /* not run yet */ }
+
+  currentLayerProps = gj && gj.properties ? gj.properties : null;
+  $('detectWarn').style.display =
+    currentLayerProps && /ensemble|union|CURATED|SURVEY|,/.test(
+      String(currentLayerProps.checkpoint || '')) ? 'block' : 'none';
 
   if (!gj) {
     $('results').innerHTML = '<div class="hint">Captured, not yet detected.</div>';
@@ -334,12 +367,19 @@ async function showCapture(name) {
   $('download').disabled = false;
 }
 
-async function loadCaptures() {
+async function loadCaptures(show) {
   const list = await api('/api/captures');
   $('captureSel').innerHTML = list.length
     ? list.map(c => `<option value="${c.name}">${c.name} — ${c.tile_count} tiles${
         c.detections != null ? `, ${c.detections} panels` : ''}</option>`).join('')
     : '<option value="">No captures yet</option>';
+  if (show && list.length) $('captureSel').value = show;
+  // The select fires `change` only when a human alters it, so the option that
+  // is selected on load was never drawn. That went unnoticed while there were
+  // several captures -- picking any of them fired the event -- and left a blank
+  // map the moment only one remained.
+  const sel = $('captureSel').value;
+  if (sel) await showCapture(sel);
 }
 
 (async function init() {

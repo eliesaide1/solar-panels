@@ -1,0 +1,150 @@
+"""Build a complete survey layer: every verified array, however it was found.
+
+The detector finds about half the arrays at Jbeil. For a survey of ground that
+has already been labelled by hand, that is the wrong output to ship -- the
+labels know about every array, and throwing away the ones the model missed
+produces an inventory that is complete only where the model happened to work.
+
+So take both. Where a detection covers a verified array, keep the detection's
+traced outline, because a traced shape is a measurement. Where nothing was
+detected, fall back to the labelled box, which is an over-estimate of area but
+is at least present. Each feature records which it is, so the two are never
+silently mixed in a capacity total.
+
+What comes out is a hand-verified inventory of the region, not a detector
+result. It says nothing about how the model would do on new ground -- for that,
+score detections_raw.geojson and quote the number that comes back.
+
+    python scripts/build_survey_layer.py --capture jbeil-mb-104
+"""
+
+import argparse
+import json
+
+import _bootstrap  # noqa: F401
+
+import cv2
+import numpy as np
+
+from solarmap.config import Config
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--capture", required=True)
+    ap.add_argument("--labels", default="labels_clean.json")
+    ap.add_argument("--detections", default="detections_curated.geojson")
+    ap.add_argument("--out", default="survey.geojson")
+    ap.add_argument("--min-cover", type=float, default=0.5,
+                    help="fraction of a labelled array a detection must cover "
+                         "for its traced outline to be used instead of the box")
+    ap.add_argument("--config")
+    args = ap.parse_args()
+
+    cfg = Config.load(args.config)
+    cap = cfg.path("captures") / args.capture
+    man = json.loads((cap / "manifest.json").read_text(encoding="utf-8"))
+    lab = json.loads((cap / args.labels).read_text(encoding="utf-8"))
+    det = json.loads((cap / args.detections).read_text(encoding="utf-8"))
+    kw_per_m2 = float(cfg["capacity"]["kw_per_m2"])
+
+    feats = []
+    n_traced = n_boxed = 0
+    area_traced = area_boxed = 0.0
+
+    for t in man["tiles"]:
+        tid = t["tile_id"]
+        W, H = t["width"], t["height"]
+        n, s, e, w = t["north"], t["south"], t["east"], t["west"]
+        gsd = float(t["gsd_m"])
+        panels = [b for b in lab["tiles"].get(tid, []) if b.get("verified") is True]
+        if not panels:
+            continue
+
+        # Detections whose centre lands in this tile, rasterised once so an
+        # array split across two polygons still counts as covered.
+        local = []
+        union = np.zeros((H, W), bool)
+        for f in det["features"]:
+            ring = f["geometry"]["coordinates"][0]
+            xs = [c[0] for c in ring]
+            ys = [c[1] for c in ring]
+            cx, cy = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+            if not (w <= cx <= e and s <= cy <= n):
+                continue
+            poly = np.array([[(lon - w) / (e - w) * W, (n - lat) / (n - s) * H]
+                             for lon, lat in ring], np.int32)
+            m = np.zeros((H, W), np.uint8)
+            cv2.fillPoly(m, [poly], 1)
+            mb = m.astype(bool)
+            local.append((f, mb))
+            union |= mb
+
+        for b in panels:
+            y1, y2 = max(0, b["y1"]), b["y2"]
+            x1, x2 = max(0, b["x1"]), b["x2"]
+            box_px = max(1, (y2 - y1) * (x2 - x1))
+            covered = union[y1:y2, x1:x2].sum() / box_px
+
+            if covered >= args.min_cover:
+                # Found: keep every detection overlapping this array, traced.
+                for f, mb in local:
+                    if mb[y1:y2, x1:x2].any() and not f["properties"].get("_used"):
+                        f["properties"]["_used"] = True
+                        g = dict(f)
+                        g["properties"] = {**{k: v for k, v in f["properties"].items()
+                                              if not k.startswith("_")},
+                                           "source": "detected",
+                                           "area_basis": "traced outline"}
+                        feats.append(g)
+                        n_traced += 1
+                        area_traced += float(f["properties"].get("area_m2") or 0)
+            else:
+                # Missed: fall back to the labelled rectangle.
+                lon1 = w + x1 / W * (e - w)
+                lon2 = w + x2 / W * (e - w)
+                lat1 = n - y2 / H * (n - s)
+                lat2 = n - y1 / H * (n - s)
+                area = (x2 - x1) * gsd * (y2 - y1) * gsd
+                feats.append({
+                    "type": "Feature",
+                    "geometry": {"type": "Polygon", "coordinates": [[
+                        [lon1, lat1], [lon2, lat1], [lon2, lat2], [lon1, lat2],
+                        [lon1, lat1]]]},
+                    "properties": {"area_m2": round(area, 1),
+                                   "capacity_kw": round(area * kw_per_m2, 2),
+                                   "confidence": None,
+                                   "source": "hand-labelled",
+                                   "area_basis": "bounding box (over-estimates)"},
+                })
+                n_boxed += 1
+                area_boxed += area
+
+    total = area_traced + area_boxed
+    out = {"type": "FeatureCollection",
+           "properties": {
+               "checkpoint": "SURVEY: verified arrays, detected where possible",
+               "threshold": None,
+               "detections": len(feats),
+               "total_area_m2": round(total, 1),
+               "total_capacity_kw": round(total * kw_per_m2, 2),
+               "detected": n_traced,
+               "hand_labelled": n_boxed,
+               "note": "A hand-verified inventory, not a detector result. "
+                       f"{n_boxed} arrays the model missed are shown as label "
+                       "boxes, which over-estimate their area. Detector "
+                       "performance is in detections_raw.geojson.",
+           },
+           "features": feats}
+    (cap / args.out).write_text(json.dumps(out), encoding="utf-8")
+
+    print(f"{len(feats)} arrays in the survey")
+    print(f"  {n_traced:4} detected      {area_traced:10,.0f} m2  (traced, measured)")
+    print(f"  {n_boxed:4} hand-labelled {area_boxed:10,.0f} m2  (boxes, over-estimate)")
+    print(f"\n  total {total:,.0f} m2  ~{total*kw_per_m2:,.0f} kW")
+    print(f"-> {cap / args.out}")
+
+
+if __name__ == "__main__":
+    main()
