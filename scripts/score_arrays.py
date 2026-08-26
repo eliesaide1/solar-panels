@@ -56,6 +56,16 @@ def main() -> None:
                          "panel for it to count as correct (default 0.5)")
     ap.add_argument("--misses", action="store_true",
                     help="list the arrays that were not located, largest first")
+    ap.add_argument("--labelled-tiles-only", action="store_true",
+                    help="score only tiles that contain a verified array. This "
+                         "is the old behaviour and it FLATTERS precision: a "
+                         "tile swept and found empty is ground truth saying "
+                         "'nothing here', so every detection on it is a false "
+                         "positive, and skipping the tile hides them. At Jbeil "
+                         "that was 15 detections on greenhouses across 34 "
+                         "tiles, worth 8 points of precision. Use only when the "
+                         "capture was NOT exhaustively swept, where an empty "
+                         "tile really does mean 'not looked at'.")
     ap.add_argument("--config")
     args = ap.parse_args()
 
@@ -84,7 +94,7 @@ def main() -> None:
         px = gsd * gsd
 
         panels = [b for b in labels["tiles"].get(tid, []) if b.get("verified") is True]
-        if not panels:
+        if not panels and args.labelled_tiles_only:
             continue
         labelled_tiles += 1
 
@@ -151,7 +161,9 @@ def main() -> None:
     print(f"labels         : {args.labels}")
     print(f"model          : {dets['properties'].get('checkpoint')} "
           f"@ threshold {dets['properties'].get('threshold')}")
-    print(f"tiles labelled : {labelled_tiles}")
+    print(f"tiles scored   : {labelled_tiles}"
+          + ("  (only those holding an array -- flatters precision)"
+             if args.labelled_tiles_only else "  (all, empty ones count as background)"))
     print(f"match rule     : array located at >= {args.min_cover:.0%} covered, "
           f"detection correct at >= {args.min_on_panel:.0%} on panel")
     print()

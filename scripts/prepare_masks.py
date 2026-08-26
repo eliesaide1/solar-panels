@@ -40,6 +40,16 @@ def main() -> None:
     ap.add_argument("--val-frac", type=float, default=0.25)
     ap.add_argument("--neg-frac", type=float, default=0.25,
                     help="share of panel-free crops to keep, as negatives")
+    ap.add_argument("--include-empty-tiles", action="store_true",
+                    help="also take crops from tiles that were reviewed and "
+                         "hold no panel at all. Without this the model never "
+                         "sees the parts of a region that contain only "
+                         "look-alikes: at Jbeil the greenhouse hillsides were "
+                         "34 of 81 tiles and were absent from training, so "
+                         "polytunnels were detected as arrays. Only safe on an "
+                         "exhaustively swept capture -- an unvisited tile is "
+                         "indistinguishable from an empty one, and teaching a "
+                         "real array as background is worse than omitting it.")
     ap.add_argument("--seed", type=int, default=11)
     ap.add_argument("--config")
     args = ap.parse_args()
@@ -56,13 +66,15 @@ def main() -> None:
         if boxes and any(b.get("verified") is None for b in boxes):
             continue
         panels = [b for b in boxes if b.get("verified") is True]
-        if panels:
+        if panels or args.include_empty_tiles:
             usable.append((t["tile_id"], panels))
 
     rng.shuffle(usable)
     n_val = max(1, int(len(usable) * args.val_frac))
     val_ids = {tid for tid, _ in usable[:n_val]}
-    print(f"{len(usable)} tiles with panels -> {len(val_ids)} held out")
+    n_empty = sum(1 for _, p in usable if not p)
+    print(f"{len(usable)} tiles ({len(usable)-n_empty} with panels, "
+          f"{n_empty} pure background) -> {len(val_ids)} held out")
 
     root = cfg.path("datasets") / args.name
     for split in ("train", "val"):

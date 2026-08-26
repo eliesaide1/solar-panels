@@ -257,6 +257,12 @@ Design decisions worth knowing:
 - **A model must never be scored against the labels it was trained on.** Doing
   exactly that is what made the cv+filter detector look 43 points more precise
   than it is. Hold out ground truth, or label independently.
+- **A tile swept and found empty is ground truth, not a gap.** `score_arrays.py`
+  originally skipped tiles holding no verified array, which silently excluded 34
+  of 81 tiles at Jbeil and every detection on them — worth 8.6 points of
+  precision, and it hid the greenhouse problem entirely. Scoring now covers the
+  whole capture; `--labelled-tiles-only` restores the old behaviour for captures
+  that genuinely were not swept end to end.
 
 ## Measured results at Jbeil
 
@@ -280,9 +286,10 @@ python scripts/score_arrays.py --capture jbeil-mb-104 --labels labels_clean.json
 
 | detector | array recall | detection precision | F1 |
 |---|---|---|---|
-| **fine-tuned pair, agreeing** | **56.5%** | **85.9%** | **0.682** |
-| fine-tuned pair, agreeing (coverage-first) | 62.1% | 75.9% | 0.683 |
-| fine-tuned pair, unioned | 58.5% | 72.1% | 0.646 |
+| **fine-tuned pair, agreeing** | **56.5%** | **77.3%** | **0.653** |
+| fine-tuned pair, unioned | 58.5% | 66.0% | 0.611 |
+| multi-scale model alone @ 0.70 | 50.3% | 59.6% | 0.546 |
+| single fine-tuned model @ 0.85 | 50.7% | 71.1% | 0.592 |
 | U-Net fine-tuned (single-scale base) @ 0.85 | 50.7% | 78.0% | 0.614 |
 | U-Net fine-tuned (multi-scale base) @ 0.50 | 60.1% | 58.2% | 0.591 |
 | U-Net BDAPPV, no fine-tune @ 10.4 cm | 23.2% | 96.5% | 0.374 |
@@ -296,15 +303,16 @@ their BDAPPV stage ran and whether it used scale augmentation, which is enough
 to make them fail on different roofs.
 
 **Agreement beats union, on both axes at once.** Unioning the same two models
-gives 58.5%/72.1%; requiring them to agree gives 56.5%/**85.9%** — and a second
-operating point, 62.1%/75.9%, beats the union on recall *and* precision
-simultaneously. A false positive has to fool two independently pretrained
-models rather than one, and that is a much harder thing to do. Agreement also
-halves the detection count (135 against 258), which matters when a human is
-reviewing the output.
+gives 58.5%/66.0%; requiring them to agree gives 56.5%/**77.3%**. A false
+positive has to fool two independently pretrained models rather than one, and
+that is a much harder thing to do. Agreement also nearly halves the detection
+count, which matters whenever a human reviews the output.
 
-Pick the operating point for the job: **56.5%/85.9%** when the map is being
-shown or the figures quoted, **62.1%/75.9%** when coverage matters more.
+It is also the best defence found against **greenhouses**, which are the
+signature false positive here — long parallel polytunnels read very much like
+panel rows. The ensemble puts 15 detections on the 34 array-free tiles against
+27–37 for every single model, and it does so without having been designed for
+it.
 
 **Fine-tuning on local labels is what moved this**, from 23.2% to 56.5% recall.
 Nothing else in three months of work came close, which is the argument for
@@ -354,8 +362,8 @@ The union beats every single resolution on recall, but its F1 is flat, and
 60.1%/59.4% is the same trade as running one resolution at threshold 0.50. It
 costs three times the inference for 3–4 points of recall at matched precision.
 
-Combining two *different models* at the same resolution gains far more (0.682
-against 0.614 and 0.591). Diversity of error is what an ensemble monetises, and
+Combining two *different models* at the same resolution gains far more (0.653
+against 0.592 and 0.546). Diversity of error is what an ensemble monetises, and
 two separately pretrained models provide plenty of it; the same model shown the
 same roof at 8 and 12 cm provides very little, because it fails the same way
 both times.
@@ -366,11 +374,10 @@ maximises recall and lets any single model's mistakes through; agreement
 
 | combination | recall | precision | F1 |
 |---|---|---|---|
-| union @0.85 | 58.5% | 72.1% | 0.646 |
-| agree @0.85 | 51.3% | 88.0% | 0.648 |
-| agree, 0.85 + 0.70 | 56.5% | 85.9% | 0.682 |
-| agree @0.70 | 62.1% | 75.9% | 0.683 |
-| agree, 2 of 3 layers | 67.6% | 66.1% | 0.669 |
+| union @0.85 | 58.5% | 66.0% | 0.611 |
+| **agree, 0.85 + 0.70** | **56.5%** | **77.3%** | **0.653** |
+| agree, three models, 3 of 3 | 53.3% | 83.2% | 0.650 |
+| agree, three models, 2 of 3 | 59.5% | 69.3% | 0.640 |
 
 ### Resolution is a tuning parameter, and it has a peak
 
@@ -434,6 +441,22 @@ margin. Cross-region transfer was never the problem; scale mismatch and bad
 ground truth were, and both were errors in how it was evaluated rather than
 anything the model did.
 
+**Training explicitly against the look-alikes did not work.** Greenhouses are
+the signature false positive: long parallel polytunnels read very much like
+panel rows. `prepare_masks.py` had been building crops only from tiles
+containing a panel, so the 34 array-free tiles — nearly all the greenhouse
+hillsides — never entered training at all. Adding them back
+(`--include-empty-tiles`, 806 → 1,056 crops) and fine-tuning for 16 epochs
+changed nothing: 37 false positives on those tiles at threshold 0.70, against
+36 for the model that had never seen a greenhouse, and worse overall
+(F1 0.568 against 0.653). Adding it to the ensemble as a third voter did not
+help either — 3-of-3 gives 0.650, 2-of-3 gives 0.640.
+
+The flag is kept because omitting negative tiles is still wrong in principle,
+but on this evidence 312 positive examples is too little contrast to teach the
+distinction. Ensembling suppresses greenhouses better than training against
+them does, which was not the expected result.
+
 **Withdrawn: "each region needs its own labelling pass, and the tooling makes
 that roughly an hour."** The first half holds and is now the central finding —
 fine-tuning on local labels is the only thing that has ever moved recall
@@ -471,15 +494,14 @@ segmentation.
 Every cheap lever has been pulled and measured: threshold tuning, resolution
 ensembling, model ensembling, and how the ensemble combines. They are all in
 the tables above, and together they took the detector from 23.2% of arrays at
-96.5% precision to **56.5% at 85.9%** — or 62.1% at 75.9% if coverage is worth
-more than a clean map.
+96.5% precision to **56.5% at 77.3%**.
 
 What remains is data. Jbeil holds **242 arrays/km²**, so the 1.3 km² labelled
 here yielded 312 arrays; BDAPPV needed 22,615 rooftops to reach 91% recall on
 its own imagery. Roughly **6 km²** would give ~1,500 local arrays, which is the
 next honest step toward a survey-grade number.
 
-The next pass is cheaper than this one was. An 86%-precision model can seed it,
+The next pass is cheaper than this one was. A 77%-precision model can seed it,
 which is a different proposition from the classical proposer that does not
 function at 6 cm — the labeller confirms a good model's output instead of
 adjudicating a bad heuristic's.
