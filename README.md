@@ -240,7 +240,15 @@ Design decisions worth knowing:
   IoU — without it, installed capacity is over-counted. (Tile captures are
   seamless rather than overlapping, so only the inference windows overlap.)
 - **Areas are computed in UTM, never in degrees.** A square degree is not an
-  area, and its size varies with latitude.
+  area, and its size varies with latitude. `merge_detections.py` used to be the
+  exception: it scaled degrees by a per-axis factor and set the latitude factor
+  equal to the longitude one, which had already been multiplied by cos(lat) for
+  meridian convergence. Latitude degrees do not converge, so every merged layer
+  reported an area a factor of cos(lat) low — 17% at Jbeil, worse further from
+  the equator — and capacity inherited it. Fixed by projecting to UTM like
+  everything else. The shipped layer went 14,138 → **17,051 m²**, and the Jbeil
+  survey 20,519 → **23,232 m² / 4,414 kW**. No accuracy figure moves: recall and
+  precision are measured by rasterising geometry, which was always correct.
 - **Tile captures are georeferenced in Web Mercator, not lat/lon.** Slippy
   tiles are square in Mercator metres; their latitude span shrinks toward the
   poles. The manifest carries both `bounds_proj` (EPSG:3857, used for
@@ -286,7 +294,8 @@ python scripts/score_arrays.py --capture jbeil-mb-104 --labels labels_clean.json
 
 | detector | array recall | detection precision | F1 |
 |---|---|---|---|
-| **four fine-tuned models, unanimous** | **55.2%** | **83.1%** | **0.663** |
+| **three of four fine-tuned models** | **63.4%** | **72.1%** | **0.675** |
+| four fine-tuned models, unanimous | 55.2% | 83.1% | 0.663 |
 | three models, unanimous | 53.3% | 83.2% | 0.650 |
 | two models, agreeing | 56.5% | 77.3% | 0.653 |
 | two models, unioned | 58.5% | 66.0% | 0.611 |
@@ -298,23 +307,35 @@ python scripts/score_arrays.py --capture jbeil-mb-104 --labels labels_clean.json
 | cv+filter @ 6.2 cm | 11.2% | 16.7% | 0.134 |
 | U-Net BDAPPV, no fine-tune @ 6.2 cm | 0.6% | 86.7% | 0.013 |
 
-The shipped detector runs **four U-Nets and keeps only what all four find**
-(`scripts/merge_detections.py --min-sources 4`). They differ in how long their
+The shipped detector runs **four U-Nets and keeps what any three of them find**
+(`scripts/merge_detections.py --min-sources 3`). They differ in how long their
 BDAPPV stage ran, whether it used scale augmentation, and what negatives they
 saw — enough to make them fail on different roofs.
 
 Two of the four are models that **lost** on their own: one trained on whole
 array-free tiles, one on mined hard negatives, both of which failed at the
 greenhouse problem they were built for. As additional votes they still earn
-their place, because a detection has to survive four independent opinions.
+their place, because a detection has to survive three independent opinions.
 A model can be worth keeping for what it rejects rather than what it finds.
+
+**Unanimity was the shipped default until it was looked at on a map.** 4-of-4
+has the better precision (83.1% against 72.1%) and *reads* like the careful
+choice, but it locates 169 of 306 arrays where 3-of-4 locates 194 — 25 real
+installations, visibly absent from rooftops that plainly have panels on them.
+It also loses on F1, 0.663 against 0.675. The 25 arrays are exactly the ones a
+fourth model was never going to confirm: small domestic installs, median 31 m².
+Precision was being bought with recall that a survey cannot spare. Requiring
+all four remains the right call when a human reviews every detection, and
+`--min-sources 4` still does it.
 
 **Agreement beats union, on both axes at once.** Unioning the same two models
 gives 58.5%/66.0%; requiring two to agree gives 56.5%/77.3%; requiring all four
 gives **55.2%/83.1%**. A false positive has to fool every model independently,
 and each additional opinion makes that harder. Unanimity also cuts the
 detection count from 258 to 118, which matters whenever a human reviews the
-output or the layer is shown to somebody.
+output or the layer is shown to somebody. What it does not survive is the
+recall cost — see the note under the results table — which is why the shipped
+layer asks for three votes rather than four.
 
 It is also the best defence found against **greenhouses**, which are the
 signature false positive here — long parallel polytunnels read very much like
@@ -387,6 +408,28 @@ maximises recall and lets any single model's mistakes through; agreement
 | three, unanimous | 53.3% | 83.2% | 0.650 |
 | three of four | 63.4% | 72.1% | 0.675 |
 | **four, unanimous** | **55.2%** | **83.1%** | **0.663** |
+
+**What counts as a vote is a knob, and tightening it does not pay here.**
+Shapes are dissolved before the vote is counted, and a layer used to score a
+full vote on bare topological contact — so a shape that merely grazed a layer
+counted as that model having agreed, and unanimity was reachable without four
+models having agreed about the array. That is unsound, so `--min-overlap` now
+requires a layer to cover that fraction of the shape. Measured, the unsound
+rule is also the best operating point:
+
+| `--min-overlap` | detections | recall | precision | F1 |
+|---|---|---|---|---|
+| **0% (contact — default)** | 118 | **55.2%** | **83.1%** | **0.663** |
+| 10% | 112 | 53.6% | 84.8% | 0.657 |
+| 25% | 106 | 51.6% | 84.9% | 0.642 |
+| 40% | 89 | 45.8% | 91.0% | 0.609 |
+| 50% | 78 | 42.5% | 91.0% | 0.579 |
+
+The six shapes a 10% rule removes were net-positive, and F1 falls monotonically
+from there. The default therefore stays at the published behaviour rather than
+quietly moving the headline number; raise it when precision is worth more than
+recall. It cannot go far past 0.5 without failing the case the ensemble exists
+for — two models finding complementary halves of one array.
 
 ### Resolution is a tuning parameter, and it has a peak
 
