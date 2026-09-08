@@ -19,6 +19,7 @@ import shutil
 
 import _bootstrap  # noqa: F401
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -94,7 +95,17 @@ def main() -> None:
             W, H = im.size
             mask = np.zeros((H, W), np.uint8)
             for b in panels:
-                mask[max(0, b["y1"]):b["y2"], max(0, b["x1"]):b["x2"]] = 255
+                # A hand-drawn outline, where one exists, is the real footprint.
+                # Filling the bounding box instead is the approximation this
+                # module's docstring warns about -- a box over a tilted or
+                # L-shaped array includes roof, and the model learns to trace
+                # generous footprints. apply_corrections.py writes `poly` from
+                # polygons drawn in the map UI.
+                poly = b.get("poly")
+                if poly and len(poly) >= 3:
+                    cv2.fillPoly(mask, [np.asarray(poly, np.int32)], 255)
+                else:
+                    mask[max(0, b["y1"]):b["y2"], max(0, b["x1"]):b["x2"]] = 255
 
             for oy in range(0, max(1, H - S + 1), step):
                 for ox in range(0, max(1, W - S + 1), step):

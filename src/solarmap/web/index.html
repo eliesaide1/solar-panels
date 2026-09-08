@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SolarMap</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.14.2/dist/leaflet-geoman.css">
 <style>
   :root {
     --bg: #10151c; --panel: #172029; --line: #26323f;
@@ -44,6 +45,14 @@
   }
   button.ghost { background: #202b36; color: var(--ink); font-weight: 500; }
   button:disabled { opacity: .45; cursor: not-allowed; }
+  button.busy { opacity: .8; cursor: progress; }
+  .spinner {
+    display: inline-block; width: 12px; height: 12px; margin-right: 7px;
+    border: 2px solid currentColor; border-right-color: transparent;
+    border-radius: 50%; vertical-align: -2px;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
   #status {
     margin-top: 14px; padding: 10px; border-radius: 6px; background: #0d1218;
     border: 1px solid var(--line); font-size: 12px; min-height: 40px;
@@ -115,15 +124,65 @@
   <div id="results"><div class="hint">No results loaded.</div></div>
   <button class="ghost" id="download" disabled>Download GeoJSON</button>
 
+  <h2>4 · CORRECT</h2>
+  <div class="hint">
+    Fix the layer by hand. Corrections are saved separately from
+    <code>detections.geojson</code>, which the pipeline overwrites, so they
+    survive re-running detection and can be folded into the training labels.
+  </div>
+  <button class="ghost" id="editToggle">Start correcting</button>
+  <div id="editTools" style="display:none">
+    <div class="row" style="margin-top:8px">
+      <button class="ghost" id="penAdd">✏ Pen — array</button>
+      <button class="ghost" id="penRemove">✏ Pen — wrong</button>
+    </div>
+    <div class="row" style="margin-top:6px">
+      <button class="ghost" id="eraser">🧽 Eraser</button>
+      <button class="ghost" id="clickAdd">⬡ Click points</button>
+    </div>
+    <div class="row" style="margin-top:6px">
+      <button class="ghost" id="editShape">✎ Edit shape</button>
+      <button class="ghost" id="undoLast">↩ Undo last</button>
+    </div>
+    <button class="ghost" id="handTool" style="margin-top:6px">✋ Hand — move the map <kbd>H</kbd></button>
+    <div class="hint" style="margin-top:6px">
+      <b>Pen</b> — hold the mouse down and trace round an array, freehand. The
+      map stops panning while the pen is active.<br>
+      <b>Eraser</b> — drag across a blue shape to mark it wrong and remove it,
+      or across something you drew to rub it out. To bring a removed shape
+      back, click its red outline.<br>
+      <b>Edit shape</b> — click any outline, then drag its points to move them,
+      drag a midpoint to add one, or right-click a point to delete it. Click the
+      map when done.<br>
+      <b>Click points</b> — vertex-by-vertex polygon, for straight edges.<br>
+      <b>Undo last</b> — takes back the most recent correction.<br>
+      <kbd>Esc</kbd> cancels and returns to panning.
+    </div>
+    <div class="hint" id="editCount" style="margin-top:6px"></div>
+    <button id="saveEdits" style="margin-top:8px">Save corrections</button>
+    <button class="ghost" id="applyEdits" style="margin-top:6px">Apply to layer</button>
+    <div class="hint" style="margin-top:6px">
+      <b>Save</b> stores your edits. <b>Apply</b> folds them into the labels and
+      rebuilds the layer, so drawn arrays become measured shapes like the rest.
+      Takes a few minutes — it re-traces on CPU.
+    </div>
+  </div>
+
   <div class="attrib" id="attrib"></div>
 </div>
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.14.2/dist/leaflet-geoman.min.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const api = async (url, opts) => {
-  const r = await fetch(url, opts);
+  // no-store, because detections.geojson is rewritten in place by detect.py,
+  // merge_detections.py, curate_detections.py and build_survey_layer.py. A
+  // cached copy makes the map show a layer that no longer exists on disk,
+  // which reads as the pipeline having done nothing -- or worse, as results
+  // that were replaced hours ago.
+  const r = await fetch(url, { cache: 'no-store', ...(opts || {}) });
   const body = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(body.detail || `HTTP ${r.status}`);
   return body;
@@ -203,9 +262,10 @@ function setStatus(html, cls = '') {
 }
 function setBar(frac) { $('bar').firstElementChild.style.width = `${Math.round(frac * 100)}%`; }
 
-async function pollJob(jobId, label) {
+async function pollJob(jobId, label, onTick) {
   while (true) {
     const j = await api(`/api/jobs/${jobId}`);
+    if (onTick) onTick(j);
     if (j.total) setBar(j.current / j.total);
     if (j.status === 'running' || j.status === 'queued') {
       setStatus(`${label}: ${j.current}/${j.total || '?'} ${j.message || ''}`);
@@ -327,13 +387,57 @@ async function showCapture(name) {
     return;
   }
 
+  // A survey layer mixes measured outlines with fallback rectangles, and they
+  // are not the same claim: a traced shape is a measurement, a rectangle is a
+  // human saying "an array is in here somewhere" over ground the model reads
+  // as empty. Drawn identically they are indistinguishable on the map, and the
+  // rectangles read as false positives. Amber and dashed says which is which.
+  // Three different claims, so three different looks. Cyan is a shape the
+  // model produced. Teal is one classical thresholding produced inside a box a
+  // human verified -- the array is definitely there, but roughly a fifth of
+  // these outlines sprawl onto roof or zigzag along the module rows, so the
+  // shape is weaker evidence than its cyan neighbour. Amber is a label
+  // rectangle: no shape information at all.
+  const PANEL_BLUE = '#0dd6ec';
+  const MEASURED = { color: PANEL_BLUE, fillColor: PANEL_BLUE, fillOpacity: 0.35, weight: 2 };
+  const BASIS_STYLES = {
+    // A shape you traced by hand is the strongest evidence in the layer, so it
+    // reads as measured -- same cyan as the rest.
+    'hand-drawn outline': MEASURED,
+    'traced by darkness inside verified box':
+      { color: '#23cbdc', fillColor: '#23cbdc', fillOpacity: 0.30, weight: 2 },
+    'bounding box (over-estimates)':
+      { color: '#ffb300', fillColor: '#ffb300', fillOpacity: 0.15, weight: 2, dashArray: '5,4' },
+  };
   detectLayer = L.geoJSON(gj, {
-    style: { color: '#00e5ff', weight: 2, fillColor: '#00e5ff', fillOpacity: 0.35 },
+    style: f => {
+      const p = f.properties || {};
+      return BASIS_STYLES[p.area_basis] || MEASURED;
+    },
     onEachFeature: (f, layer) => {
       const p = f.properties;
+      layer._originalRing = f.geometry.coordinates[0].slice();
+      layer.on('click', ev => {
+        if (!editing || tool !== 'shape') return;
+        L.DomEvent.stop(ev);
+        stopShapeEdit();
+        editingLayer = layer;
+        layer.pm.enable({ allowSelfIntersection: false });
+        setStatus('Reshaping a detection — drag points to move, drag a midpoint '
+                  + 'to add one, right-click a point to delete. Click the map when done.');
+      });
+      // A merged layer has no single confidence -- averaging four models'
+      // scores is not a probability of anything -- so it ships null. Rendering
+      // that as 0% told the viewer the detector was certain it was wrong.
+      const conf = p.confidence == null
+        ? 'confidence n/a (merged layer)'
+        : `confidence ${(p.confidence * 100).toFixed(0)}%`;
+      const basis = p.source === 'hand-labelled'
+        ? '<br><b>Label rectangle, not a measurement.</b> The model finds ' +
+          'nothing here; area is the box and over-states the array.'
+        : (p.area_basis ? `<br><span class="hint">${p.area_basis}</span>` : '');
       layer.bindPopup(
-        `<b>${p.area_m2} m&sup2;</b><br>~${p.capacity_kw} kW<br>` +
-        `confidence ${(p.confidence * 100).toFixed(0)}%`
+        `<b>${p.area_m2} m&sup2;</b><br>~${p.capacity_kw} kW<br>${conf}${basis}`
       );
     }
   }).addTo(map);
@@ -359,13 +463,467 @@ async function showCapture(name) {
     <div class="stat"><span>Tiles processed</span><b>${p.tiles_processed ?? 0}</b></div>
     <div class="stat"><span>Model</span><b>${p.checkpoint ?? '?'}</b></div>
     <div class="hint">
-      Capacity assumes ${p.kw_per_m2} kW/m&sup2; of array footprint.
+      Capacity assumes ${p.kw_per_m2 ?? '?'} kW/m&sup2; of array footprint.
       ${p.area_is_upper_bound
         ? '<br><b>Areas are bounding-box upper bounds</b> — treat capacity as a maximum.'
         : '<br>Areas are traced outlines, so they are measured rather than estimated.'}
     </div>`;
   $('download').disabled = false;
+  // Corrections are loaded with the capture, not only when the editor opens,
+  // so a saved removal hides its detection on first paint.
+  loadCorrections(currentCapture);
 }
+
+// --------------------------------------------------------------------------
+// Corrections
+//
+// Held in their own layer and their own file. detections.geojson is machine
+// output -- rewritten by detect.py, merge_detections.py, curate_detections.py
+// and build_survey_layer.py -- so an edit stored there lives until the next
+// pipeline run and trains nothing. A correction is a statement about the
+// GROUND, so it belongs with the labels, and scripts/apply_corrections.py
+// folds it there.
+// --------------------------------------------------------------------------
+
+let editing = false;
+let corrections = [];          // { ring: [[lon,lat],...], kind }
+let correctionLayer = null;
+
+// An array you draw IS an array, so it joins the layer in the same blue rather
+// than being marked out as provisional. A removal is drawn as nothing at all:
+// the shape is simply gone, which is the whole point of erasing it.
+const PANEL_BLUE_C = '#0dd6ec';
+const CORRECTION_STYLE = {
+  // Same blue as the layer, because a drawn array IS an array -- but dashed
+  // while it is still pending. Without that, applying produced no visible
+  // change at all and there was no way to tell the pipeline had run.
+  add:    { color: PANEL_BLUE_C, fillColor: PANEL_BLUE_C, fillOpacity: 0.35,
+            weight: 2, dashArray: '6,4' },
+  remove: null,
+};
+
+function renderCorrections() {
+  if (correctionLayer) { map.removeLayer(correctionLayer); correctionLayer = null; }
+  updateEditCount();
+  // Only drawn while the editor is open. Once Apply has folded them into the
+  // labels they ARE the blue shapes, so leaving them on would show every drawn
+  // array twice -- once as the correction, once as the layer it produced.
+  if (!editing || !corrections.length) return;
+  // Applied corrections are already the layer underneath -- an applied removal
+  // is a shape that no longer exists, an applied drawing is a blue outline.
+  // Redrawing them as green/red presents finished work as still pending, and
+  // invites erasing something twice.
+  const pending = corrections
+    .map((c, i) => ({ c, i }))
+    .filter(({ c }) => !c.applied && c.kind === 'add');
+  if (!pending.length) return;
+  correctionLayer = L.geoJSON({
+    type: 'FeatureCollection',
+    features: pending.map(({ c, i }) => ({
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [c.ring] },
+      properties: { idx: i, kind: c.kind },
+    })),
+  }, {
+    style: f => CORRECTION_STYLE[f.properties.kind],
+    onEachFeature: (f, layer) => {
+      layer._correctionIdx = f.properties.idx;
+      layer.on('click', ev => {
+        if (editing && tool === 'shape') {
+          L.DomEvent.stop(ev);
+          stopShapeEdit();
+          editingLayer = layer;
+          layer.pm.enable({ allowSelfIntersection: false });
+          setStatus('Editing a shape you drew — drag points to reshape. '
+                    + 'Click the map when done.');
+          return;
+        }
+        // Click-to-delete only with no tool selected. A pen or eraser drag that
+        // ends over a correction fires a click on it too, so leaving this
+        // active let an eraser stroke delete the very removal it had just
+        // created -- the shape reappeared and nothing on screen said why.
+        if (!editing || tool) return;
+        L.DomEvent.stop(ev);
+        corrections.splice(f.properties.idx, 1);
+        renderCorrections();
+      });
+    },
+  }).addTo(map);
+}
+
+function updateEditCount() {
+  const pend = corrections.filter(c => !c.applied);
+  const a = pend.filter(c => c.kind === 'add').length;
+  const r = pend.filter(c => c.kind === 'remove').length;
+  const done = corrections.length - pend.length;
+  const tail = done ? ` <span class="hint">(${done} already applied)</span>` : '';
+  $('editCount').innerHTML = pend.length
+    ? `<b>${a}</b> missed arrays drawn, <b>${r}</b> marked wrong — unsaved${tail}`
+    : (done ? `Nothing pending.${tail}` : 'No corrections yet.');
+}
+
+function ringOf(layer) {
+  // Leaflet gives [lat,lng]; GeoJSON wants [lon,lat]. Getting this backwards
+  // puts every correction in the Indian Ocean, silently.
+  const latlngs = layer.getLatLngs()[0];
+  const ring = latlngs.map(p => [p.lng, p.lat]);
+  ring.push(ring[0]);
+  return ring;
+}
+
+function setEditing(on) {
+  editing = on;
+  $('editTools').style.display = on ? 'block' : 'none';
+  $('editToggle').textContent = on ? 'Stop correcting' : 'Start correcting';
+  if (!on) {
+    // setTool(null) is what re-enables panning and restores the cursor.
+    // Leaving edit mode without it strands the map undraggable.
+    setTool(null);
+    map.pm.disableGlobalRemovalMode?.();
+  }
+  // Corrections are drawn only in edit mode, so both transitions repaint.
+  renderCorrections();
+}
+
+$('editToggle').onclick = async () => {
+  if (!currentCapture) { setStatus('Pick a capture first.', 'warn'); return; }
+  if (!editing && !corrections.length) await loadCorrections(currentCapture);
+  setEditing(!editing);
+};
+
+let pendingKind = 'add';
+let eraseStroke = 0;   // bumped per eraser drag; see eraseAt
+let tool = null;                 // 'pen' | 'erase' | null
+let penPts = [], penLine = null;
+
+function setTool(next, kind) {
+  // Leaving a tool must always restore panning, or the map locks up and the
+  // only way out is a reload.
+  map.pm.disableDraw();
+  if (tool === 'pen') endPen(true);
+  if (tool === 'shape') stopShapeEdit();
+  tool = next;
+  pendingKind = kind || 'add';
+  if (next) { map.dragging.disable(); map.getContainer().style.cursor =
+                next === 'erase' ? 'cell' : 'crosshair'; }
+  else      { map.dragging.enable();  map.getContainer().style.cursor = ''; }
+  for (const id of ['penAdd', 'penRemove', 'eraser', 'clickAdd'])
+    $(id).classList.remove('active');
+}
+
+$('penAdd').onclick    = () => setTool('pen', 'add');
+$('penRemove').onclick = () => setTool('pen', 'remove');
+$('eraser').onclick    = () => setTool('erase');
+$('clickAdd').onclick  = () => {
+  setTool(null);
+  pendingKind = 'add';
+  map.pm.enableDraw('Polygon', { snappable: false,
+                                 templineStyle: CORRECTION_STYLE.add,
+                                 hintlineStyle: CORRECTION_STYLE.add });
+};
+
+// -- freehand pen ----------------------------------------------------------
+
+function endPen(cancel) {
+  if (penLine) { map.removeLayer(penLine); penLine = null; }
+  if (!cancel && penPts.length > 6) {
+    // Raw mousemove gives hundreds of points a few pixels apart. Simplify in
+    // SCREEN space, not lat/lon, so the tolerance means the same thing at
+    // every zoom -- 3 px of hand wobble is 3 px whether you are at z16 or z20.
+    const pts = penPts.map(ll => map.latLngToLayerPoint(ll));
+    const keep = L.LineUtil.simplify(pts, 3);
+    if (keep.length >= 3) {
+      const ring = keep.map(p => {
+        const ll = map.layerPointToLatLng(p);
+        return [ll.lng, ll.lat];
+      });
+      ring.push(ring[0]);
+      corrections.push({ ring, kind: pendingKind });
+      renderCorrections();
+    }
+  }
+  penPts = [];
+}
+
+map.getContainer().addEventListener('mousedown', ev => {
+  if (!editing || tool !== 'pen' || ev.button !== 0) return;
+  ev.preventDefault();
+  penPts = [map.mouseEventToLatLng(ev)];
+  penLine = L.polyline(penPts, CORRECTION_STYLE[pendingKind]
+    || { color: '#f85149', weight: 2, dashArray: '5,4' }).addTo(map);
+});
+
+map.getContainer().addEventListener('mousemove', ev => {
+  if (!editing) return;
+  const ll = map.mouseEventToLatLng(ev);
+  if (tool === 'pen' && penLine) {
+    penPts.push(ll);
+    penLine.setLatLngs(penPts);
+  } else if (tool === 'erase' && ev.buttons === 1) {
+    eraseAt(ll);
+  }
+});
+
+map.getContainer().addEventListener('mouseup', () => {
+  if (editing && tool === 'pen' && penLine) endPen(false);
+});
+
+// A click on bare map commits the shape being edited.
+map.on('click', () => { if (editing && tool === 'shape') stopShapeEdit(); });
+
+// -- eraser ----------------------------------------------------------------
+
+function eraseAt(ll) {
+  // Own strokes first: rubbing out something you just drew should undo it,
+  // not turn it into a rejection of whatever sits underneath.
+  //
+  // But NEVER one made during this same drag. A drag fires mousemove dozens of
+  // times over the same place: the first event turned a detection into a
+  // removal, and the next found that fresh removal under the cursor and undid
+  // it. The eraser toggled instead of erasing, and which way it landed depended
+  // on the number of mouse events -- so erasing looked like it did nothing.
+  //
+  // And only 'add' corrections. A saved removal covers the spot where its
+  // detection used to be -- which now looks like empty ground -- so dragging
+  // there would delete the removal and bring the shape back, with nothing on
+  // screen to suggest that is what happened. Undo a removal by clicking its
+  // red outline in edit mode instead, where the intent is explicit.
+  const before = corrections.length;
+  corrections = corrections.filter(
+    c => c.kind !== 'add'
+      || c._stroke === eraseStroke
+      || !ringContains(c.ring, ll.lng, ll.lat));
+  if (corrections.length !== before) { renderCorrections(); return; }
+
+  // Otherwise erase a detection: record a removal carrying that shape's OWN
+  // outline. Using the detection's geometry rather than a hand-drawn box is
+  // what keeps the rejection tight -- one loosely drawn rectangle previously
+  // rejected 11 real arrays because every label centre inside it was flipped.
+  if (!detectLayer) return;
+  const doomed = [];
+  detectLayer.eachLayer(layer => {
+    const f = layer.feature;
+    if (!f || f.geometry.type !== 'Polygon') return;
+    if (ringContains(f.geometry.coordinates[0], ll.lng, ll.lat)) doomed.push(layer);
+  });
+  if (!doomed.length) return;
+  for (const layer of doomed) {
+    corrections.push({
+      ring: layer.feature.geometry.coordinates[0].slice(),
+      kind: 'remove',
+      _stroke: eraseStroke,
+    });
+    detectLayer.removeLayer(layer);
+  }
+  renderCorrections();
+}
+
+function hideRemovedDetections() {
+  // A removal saved earlier must still hide its detection after a reload,
+  // otherwise the shape returns every time the page is opened and the
+  // correction looks like it did nothing.
+  if (!detectLayer || !corrections.length) return;
+  // Only removals that have NOT been applied yet. Once applied, the server has
+  // already dropped the shape from the layer, so hiding here is redundant --
+  // and actively harmful: it also hid an array drawn afterwards over the same
+  // ground, which is the normal way of fixing a bad detection. The shape was
+  // in the file, correct, and invisible.
+  const removals = corrections.filter(c => c.kind === 'remove' && !c.applied);
+  if (!removals.length) return;
+  const doomed = [];
+  detectLayer.eachLayer(layer => {
+    const f = layer.feature;
+    if (!f || f.geometry.type !== 'Polygon') return;
+    // Never hide something a human traced. A removal says the DETECTOR was
+    // wrong here; it says nothing about an outline drawn afterwards to replace
+    // it, which is exactly how a bad detection gets fixed.
+    if (f.properties && f.properties.area_basis === 'hand-drawn outline') return;
+    const ring = f.geometry.coordinates[0];
+    const xs = ring.map(p => p[0]), ys = ring.map(p => p[1]);
+    const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    if (removals.some(r => ringContains(r.ring, cx, cy))) doomed.push(layer);
+  });
+  for (const layer of doomed) detectLayer.removeLayer(layer);
+}
+
+function ringContains(ring, x, y) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi)
+      inside = !inside;
+  }
+  return inside;
+}
+
+map.getContainer().addEventListener('mousedown', ev => {
+  if (editing && tool === 'erase' && ev.button === 0) {
+    eraseStroke += 1;              // a fresh stroke: nothing is protected yet
+    eraseAt(map.mouseEventToLatLng(ev));
+  }
+});
+
+$('handTool').onclick = () => setTool(null);
+
+// -- vertex editing --------------------------------------------------------
+//
+// Reshaping an existing outline is expressed as a removal of the old shape plus
+// an addition of the new one: the correction file only knows those two verbs,
+// and keeping it that way means editing needs no new concept downstream. A
+// shape you drew yourself is simply updated in place instead.
+
+let editingLayer = null;
+
+function stopShapeEdit() {
+  if (!editingLayer) return;
+  const layer = editingLayer;
+  editingLayer = null;
+  try { layer.pm.disable(); } catch (e) { /* already gone */ }
+  const ring = ringOf(layer);
+  const src = layer._correctionIdx;
+  if (src != null && corrections[src]) {
+    corrections[src].ring = ring;              // reshaping your own drawing
+    corrections[src].applied = null;           // it is pending again
+  } else if (layer._originalRing) {
+    corrections.push({ ring: layer._originalRing, kind: 'remove' });
+    corrections.push({ ring, kind: 'add' });
+    if (detectLayer && detectLayer.hasLayer(layer)) detectLayer.removeLayer(layer);
+  }
+  renderCorrections();
+}
+
+$('editShape').onclick = () => { setTool('shape'); };
+
+$('undoLast').onclick = () => {
+  if (!corrections.length) { setStatus('Nothing to undo.', 'warn'); return; }
+  // Walk back past already-applied edits: those are history, not a pending
+  // change, and silently reverting one would edit the layer without saying so.
+  let i = corrections.length - 1;
+  while (i >= 0 && corrections[i].applied) i -= 1;
+  if (i < 0) { setStatus('Nothing pending to undo.', 'warn'); return; }
+  const [gone] = corrections.splice(i, 1);
+  renderCorrections();
+  if (gone.kind === 'remove') showCapture(currentCapture);   // bring the shape back
+  setStatus(`Undid one ${gone.kind === 'remove' ? 'removal' : 'drawn array'}.`, 'ok');
+};
+
+document.addEventListener('keydown', ev => {
+  // Ignore while typing in the AOI/name fields, or H would drop the tool
+  // mid-word.
+  const t = ev.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+  if (!editing) return;
+  if (ev.key === 'Escape' || ev.key === 'h' || ev.key === 'H') {
+    ev.preventDefault();
+    setTool(null);
+    setStatus('Hand — drag to move the map. Pick a tool to keep correcting.');
+  }
+});
+
+map.on('pm:create', ev => {
+  const ring = ringOf(ev.layer);
+  map.removeLayer(ev.layer);           // re-drawn by renderCorrections
+  corrections.push({ ring, kind: pendingKind });
+  pendingKind = 'add';
+  map.pm.disableDraw();
+  renderCorrections();
+});
+
+async function loadCorrections(name) {
+  try {
+    const gj = await api(`/api/captures/${name}/corrections`);
+    corrections = (gj.features || []).map(f => ({
+      ring: f.geometry.coordinates[0],
+      kind: (f.properties && f.properties.kind) || 'add',
+      applied: (f.properties && f.properties.applied) || null,
+    }));
+  } catch { corrections = []; }
+  renderCorrections();
+  hideRemovedDetections();
+}
+
+$('saveEdits').onclick = async () => {
+  if (!currentCapture) return;
+  try {
+    const r = await api(`/api/captures/${currentCapture}/corrections`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        corrections: corrections.map(({ ring, kind, applied }) =>
+          ({ ring, kind, applied })),
+      }),
+    });
+    setStatus(`Saved ${r.saved} corrections (${r.added} added, ${r.removed} marked wrong). `
+      + 'Fold into labels with scripts/apply_corrections.py.', 'ok');
+    updateEditCount();
+    $('editCount').innerHTML += ' — <b>saved</b>';
+  } catch (e) {
+    setStatus(`Save failed: ${e.message}`, 'err');
+  }
+};
+
+$('applyEdits').onclick = async () => {
+  if (!currentCapture) return;
+  const btn = $('applyEdits'), save = $('saveEdits');
+  // Apply reads corrections.geojson from disk, so unsaved strokes would be
+  // silently left out. Save first rather than applying a stale set.
+  await save.onclick();
+
+  // The work is 3-5 minutes of CPU inference with only three progress steps,
+  // so without a running clock the button looks dead and invites a second
+  // click. Disabling it matters as much as the spinner: two concurrent runs
+  // would rebuild the same layer from each other's half-written output.
+  const t0 = Date.now();
+  const paint = (label) => {
+    const s = Math.round((Date.now() - t0) / 1000);
+    const mm = String(Math.floor(s / 60)), ss = String(s % 60).padStart(2, '0');
+    btn.innerHTML = `<span class="spinner"></span>${label} · ${mm}:${ss}`;
+  };
+  let phase = 'Applying';
+  const tick = setInterval(() => paint(phase), 1000);
+  btn.disabled = save.disabled = true;
+  btn.classList.add('busy');
+  paint(phase);
+
+  try {
+    const job = await api(`/api/captures/${currentCapture}/apply-corrections`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    const res = await pollJob(job.id, 'Applying corrections', j => {
+      if (j.message) phase = j.message[0].toUpperCase() + j.message.slice(1);
+    });
+    if (res) {
+      const justApplied = corrections.filter(c => !c.applied && c.kind === 'add')
+                                     .map(c => c.ring);
+      setEditing(false);
+      await showCapture(currentCapture);   // reloads corrections, now flagged applied
+      // Briefly outline what just landed. Drawn arrays render in the layer's
+      // own blue, so a successful Apply is otherwise invisible.
+      if (justApplied.length) {
+        const flash = L.geoJSON({
+          type: 'FeatureCollection',
+          features: justApplied.map(ring => ({
+            type: 'Feature', geometry: { type: 'Polygon', coordinates: [ring] },
+            properties: {},
+          })),
+        }, { style: { color: '#3fb950', weight: 4, fill: false } }).addTo(map);
+        setTimeout(() => map.removeLayer(flash), 2500);
+      }
+      setStatus(`Applied — layer rebuilt with <b>${res.features}</b> features. `
+        + 'Your corrections are now part of the measured layer.', 'ok');
+    }
+  } catch (e) {
+    setStatus(`Apply failed: ${e.message}`, 'err');
+  } finally {
+    clearInterval(tick);
+    btn.disabled = save.disabled = false;
+    btn.classList.remove('busy');
+    btn.textContent = 'Apply to layer';
+  }
+};
 
 async function loadCaptures(show) {
   const list = await api('/api/captures');

@@ -39,6 +39,16 @@ def main() -> None:
     ap.add_argument("--min-cover", type=float, default=0.5,
                     help="fraction of a labelled array a detection must cover "
                          "for its traced outline to be used instead of the box")
+    ap.add_argument("--corrections", default="corrections.geojson",
+                    help="shapes marked wrong in the map UI are suppressed from "
+                         "the output. Rejecting the underlying LABEL is not "
+                         "enough on its own: a detection can sit on ground no "
+                         "label covers, or overlap a label the rejection rule "
+                         "leaves standing, and then it returns on the next "
+                         "rebuild -- which reads as the correction having done "
+                         "nothing. This makes erasing final.")
+    ap.add_argument("--no-corrections", dest="corrections", action="store_const",
+                    const=None, help="ignore corrections.geojson entirely")
     ap.add_argument("--config")
     args = ap.parse_args()
 
@@ -49,9 +59,31 @@ def main() -> None:
     det = json.loads((cap / args.detections).read_text(encoding="utf-8"))
     kw_per_m2 = float(cfg["capacity"]["kw_per_m2"])
 
+    # Shapes the user erased in the map UI, as pixel rings per tile.
+    kill: dict[str, list] = {}
+    n_killed = 0
+    if args.corrections and (cap / args.corrections).is_file():
+        corr = json.loads((cap / args.corrections).read_text(encoding="utf-8"))
+        tiles_by_id = {t["tile_id"]: t for t in man["tiles"]}
+        for f in corr.get("features", []):
+            if f.get("properties", {}).get("kind") != "remove":
+                continue
+            ring = f["geometry"]["coordinates"][0]
+            xs = [c[0] for c in ring]; ys = [c[1] for c in ring]
+            cx, cy = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+            for t in tiles_by_id.values():
+                if t["west"] <= cx <= t["east"] and t["south"] <= cy <= t["north"]:
+                    W_, H_ = t["width"], t["height"]
+                    n_, s_, e_, w_ = t["north"], t["south"], t["east"], t["west"]
+                    kill.setdefault(t["tile_id"], []).append(
+                        np.array([[(lo - w_) / (e_ - w_) * W_,
+                                   (n_ - la) / (n_ - s_) * H_] for lo, la in ring],
+                                 np.int32))
+                    break
+
     feats = []
-    n_traced = n_boxed = 0
-    area_traced = area_boxed = 0.0
+    n_traced = n_boxed = n_drawn = 0
+    area_traced = area_boxed = area_drawn = 0.0
 
     for t in man["tiles"]:
         tid = t["tile_id"]
@@ -61,6 +93,12 @@ def main() -> None:
         panels = [b for b in lab["tiles"].get(tid, []) if b.get("verified") is True]
         if not panels:
             continue
+
+        killed = np.zeros((H, W), bool)
+        for ring_px in kill.get(tid, []):
+            layer = np.zeros((H, W), np.uint8)
+            cv2.fillPoly(layer, [ring_px], 1)
+            killed |= layer.astype(bool)
 
         # Detections whose centre lands in this tile, rasterised once so an
         # array split across two polygons still counts as covered.
@@ -78,6 +116,9 @@ def main() -> None:
             m = np.zeros((H, W), np.uint8)
             cv2.fillPoly(m, [poly], 1)
             mb = m.astype(bool)
+            if killed.any() and mb.any() and (mb & killed).sum() / mb.sum() >= 0.5:
+                n_killed += 1
+                continue
             local.append((f, mb))
             union |= mb
 
@@ -86,6 +127,36 @@ def main() -> None:
             x1, x2 = max(0, b["x1"]), b["x2"]
             box_px = max(1, (y2 - y1) * (x2 - x1))
             covered = union[y1:y2, x1:x2].sum() / box_px
+
+            # A hand-drawn outline outranks everything. Someone looked at this
+            # rooftop and traced it; a detector's guess and a bounding box are
+            # both weaker evidence. Without this branch the drawn shape is
+            # silently discarded -- the layer rebuilds from the detector and
+            # comes back looking exactly as it did before the correction, which
+            # is precisely what a correction is supposed to change.
+            poly = b.get("poly")
+            if poly and len(poly) >= 3:
+                ring = [[w + px / W * (e - w), n - py / H * (n - s)]
+                        for px, py in poly]
+                ring.append(ring[0])
+                area = abs(cv2.contourArea(np.asarray(poly, np.int32))) * gsd * gsd
+                feats.append({
+                    "type": "Feature",
+                    "geometry": {"type": "Polygon", "coordinates": [ring]},
+                    "properties": {"area_m2": round(area, 1),
+                                   "capacity_kw": round(area * kw_per_m2, 2),
+                                   "confidence": None,
+                                   "source": "hand-drawn",
+                                   "area_basis": "hand-drawn outline"},
+                })
+                n_drawn += 1
+                area_drawn += area
+                # Claim any detection under it, so the same array is not also
+                # emitted as the detector's version of the same shape.
+                for f, mb in local:
+                    if mb[y1:y2, x1:x2].any():
+                        f["properties"]["_used"] = True
+                continue
 
             if covered >= args.min_cover:
                 # Found: keep every detection overlapping this array, traced.
@@ -121,7 +192,7 @@ def main() -> None:
                 n_boxed += 1
                 area_boxed += area
 
-    total = area_traced + area_boxed
+    total = area_traced + area_boxed + area_drawn
     out = {"type": "FeatureCollection",
            "properties": {
                "checkpoint": "SURVEY: verified arrays, detected where possible",
@@ -131,6 +202,14 @@ def main() -> None:
                "total_capacity_kw": round(total * kw_per_m2, 2),
                "detected": n_traced,
                "hand_labelled": n_boxed,
+               "hand_drawn": n_drawn,
+               # Read by the UI if this layer is ever loaded as the active one.
+               "kw_per_m2": kw_per_m2,
+               "tiles_processed": len(man["tiles"]),
+               # Mixed basis: traced outlines for the detected arrays, boxes
+               # for the missed ones. The boxes dominate the error, so the
+               # total is an over-estimate and the UI should say so.
+               "area_is_upper_bound": n_boxed > 0,
                "note": "A hand-verified inventory, not a detector result. "
                        f"{n_boxed} arrays the model missed are shown as label "
                        "boxes, which over-estimate their area. Detector "
@@ -139,8 +218,12 @@ def main() -> None:
            "features": feats}
     (cap / args.out).write_text(json.dumps(out), encoding="utf-8")
 
+    if n_killed:
+        print(f"  {n_killed} detections suppressed (marked wrong in the map UI)")
     print(f"{len(feats)} arrays in the survey")
     print(f"  {n_traced:4} detected      {area_traced:10,.0f} m2  (traced, measured)")
+    if n_drawn:
+        print(f"  {n_drawn:4} hand-drawn    {area_drawn:10,.0f} m2  (traced by you, authoritative)")
     print(f"  {n_boxed:4} hand-labelled {area_boxed:10,.0f} m2  (boxes, over-estimate)")
     print(f"\n  total {total:,.0f} m2  ~{total*kw_per_m2:,.0f} kW")
     print(f"-> {cap / args.out}")
