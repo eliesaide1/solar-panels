@@ -93,9 +93,14 @@ def main() -> None:
     src_props = det.get("properties", {})
     out = {
         "type": "FeatureCollection",
+        # Carry the source layer's properties forward rather than rebuilding a
+        # subset of them. The UI reads kw_per_m2, tiles_processed and
+        # area_is_upper_bound; rebuilding dropped all three, so a curated layer
+        # rendered "Capacity assumes undefined kW/m2" over a capacity computed
+        # from exactly that figure.
         "properties": {
+            **src_props,
             "checkpoint": f"{src_props.get('checkpoint')} [CURATED]",
-            "threshold": src_props.get("threshold"),
             "detections": len(keep),
             "total_area_m2": round(area, 1),
             "total_capacity_kw": round(kw, 2),
@@ -107,9 +112,21 @@ def main() -> None:
         "features": keep,
     }
 
-    if not (cap / args.keep_raw).exists():
-        (cap / args.keep_raw).write_text(json.dumps(det), encoding="utf-8")
-        print(f"uncurated layer preserved -> {args.keep_raw}")
+    # Always refresh the uncurated layer, so re-running on a rebuilt input
+    # cannot leave the honest layer describing a detector that no longer
+    # exists -- it is the one the README tells you to quote, and it used to go
+    # stale silently while the curated layer beside it updated. Refuse only
+    # when the input is itself curated, which is what the old check was
+    # reaching for.
+    if "[CURATED]" in str(src_props.get("checkpoint", "")):
+        raise SystemExit(
+            f"{args.detections} is already curated. Curating it again would "
+            f"overwrite {args.keep_raw} with a layer that has had its false "
+            "positives removed, destroying the only honest record. Point "
+            "--detections at the raw merged layer instead."
+        )
+    (cap / args.keep_raw).write_text(json.dumps(det), encoding="utf-8")
+    print(f"uncurated layer preserved -> {args.keep_raw}")
     (cap / args.out).write_text(json.dumps(out), encoding="utf-8")
 
     total = len(keep) + dropped

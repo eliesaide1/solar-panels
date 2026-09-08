@@ -66,11 +66,32 @@ def main() -> None:
                          "tiles, worth 8 points of precision. Use only when the "
                          "capture was NOT exhaustively swept, where an empty "
                          "tile really does mean 'not looked at'.")
+    ap.add_argument("--held-out-from", metavar="DATASET",
+                    help="score ONLY the tiles held out of this training set, "
+                         "named under data/datasets. Without this, a fine-tuned "
+                         "checkpoint is scored on ground it trained on and "
+                         "reads several points high -- at Jbeil, 65.6%% on the "
+                         "36 trained tiles against 51.1%% on the 11 held out. "
+                         "The split is recovered from the crop filenames, which "
+                         "prepare_masks.py writes as {tile_id}_{ox}_{oy}, rather "
+                         "than re-derived from the RNG: re-deriving disagrees "
+                         "the moment --seed or --include-empty-tiles differs, "
+                         "which is how the four shipped models ended up on "
+                         "three different splits.")
     ap.add_argument("--config")
     args = ap.parse_args()
 
     cfg = Config.load(args.config)
     cap = cfg.path("captures") / args.capture
+
+    only_tiles = None
+    if args.held_out_from:
+        val_dir = cfg.path("datasets") / args.held_out_from / "val" / "images"
+        if not val_dir.is_dir():
+            raise SystemExit(f"No val split at {val_dir}")
+        only_tiles = {p.name.rsplit("_", 2)[0] for p in val_dir.glob("*.png")}
+        if not only_tiles:
+            raise SystemExit(f"No crops under {val_dir}")
 
     for name in ("manifest.json", args.labels, args.detections):
         if not (cap / name).is_file():
@@ -88,6 +109,8 @@ def main() -> None:
 
     for t in manifest["tiles"]:
         tid = t["tile_id"]
+        if only_tiles is not None and tid not in only_tiles:
+            continue
         W, H = t["width"], t["height"]
         n, s, e, w = t["north"], t["south"], t["east"], t["west"]
         gsd = float(t["gsd_m"])
@@ -161,6 +184,9 @@ def main() -> None:
     print(f"labels         : {args.labels}")
     print(f"model          : {dets['properties'].get('checkpoint')} "
           f"@ threshold {dets['properties'].get('threshold')}")
+    if only_tiles is not None:
+        print(f"HELD OUT ONLY  : {len(only_tiles)} tiles never trained on "
+              f"(--held-out-from {args.held_out_from})")
     print(f"tiles scored   : {labelled_tiles}"
           + ("  (only those holding an array -- flatters precision)"
              if args.labelled_tiles_only else "  (all, empty ones count as background)"))
