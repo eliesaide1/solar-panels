@@ -49,6 +49,16 @@ def main() -> None:
                          "nothing. This makes erasing final.")
     ap.add_argument("--no-corrections", dest="corrections", action="store_const",
                     const=None, help="ignore corrections.geojson entirely")
+    ap.add_argument("--keep-unmatched", action="store_true",
+                    help="keep detections that cover no verified array, flagged "
+                         "as unverified. This module assumes an exhaustively "
+                         "swept capture, where an unmatched detection is a false "
+                         "positive worth dropping. On a region being labelled "
+                         "that assumption is inverted -- almost nothing is "
+                         "labelled yet -- and dropping them silently deletes the "
+                         "seed layer somebody is working from. Enabled "
+                         "automatically when the labels are too sparse to be a "
+                         "sweep.")
     ap.add_argument("--config")
     args = ap.parse_args()
 
@@ -81,8 +91,52 @@ def main() -> None:
                                  np.int32))
                     break
 
+    # A sweep has labels of the same order as detections. Far fewer means this
+    # capture is mid-labelling, not finished, and unmatched detections are the
+    # seed rather than errors.
+    n_verified = sum(1 for bs in lab["tiles"].values()
+                     for b in bs if b.get("verified") is True)
+    n_dets = len(det.get("features", []))
+    sparse = n_dets > 0 and n_verified < 0.5 * n_dets
+    keep_unmatched = args.keep_unmatched or sparse
+    if sparse and not args.keep_unmatched:
+        print(f"NOTE: only {n_verified} verified arrays against {n_dets} "
+              "detections -- this capture is not a completed sweep, so "
+              "unmatched detections are KEPT rather than treated as false "
+              "positives. Pass --no-keep-unmatched behaviour explicitly once "
+              "the region is fully labelled.")
+
+    # Suppress erased shapes BEFORE the per-tile loop, and independently of
+    # labels. That loop skips any tile holding no verified array, so on a region
+    # still being labelled -- where almost no tile has one -- the removal mask
+    # was never built and erasing did nothing at all. A removal is a statement
+    # about a detection, not about a label, so it cannot depend on one existing.
+    if kill:
+        from shapely.geometry import Polygon as _Poly
+        from shapely.ops import unary_union as _union
+        rings = []
+        for f in (corr.get("features", []) if args.corrections else []):
+            if f.get("properties", {}).get("kind") != "remove":
+                continue
+            g = _Poly(f["geometry"]["coordinates"][0])
+            if not g.is_valid:
+                g = g.buffer(0)
+            if not g.is_empty:
+                rings.append(g)
+        if rings:
+            dead = _union(rings)
+            for f in det.get("features", []):
+                g = _Poly(f["geometry"]["coordinates"][0])
+                if not g.is_valid:
+                    g = g.buffer(0)
+                if g.is_empty or g.area <= 0:
+                    continue
+                if g.intersection(dead).area / g.area >= 0.5:
+                    f["properties"]["_used"] = True
+                    n_killed += 1
+
     feats = []
-    n_traced = n_boxed = n_drawn = 0
+    n_traced = n_boxed = n_drawn = n_unmatched = 0
     area_traced = area_boxed = area_drawn = 0.0
 
     for t in man["tiles"]:
@@ -116,9 +170,8 @@ def main() -> None:
             m = np.zeros((H, W), np.uint8)
             cv2.fillPoly(m, [poly], 1)
             mb = m.astype(bool)
-            if killed.any() and mb.any() and (mb & killed).sum() / mb.sum() >= 0.5:
-                n_killed += 1
-                continue
+            if f["properties"].get("_used"):
+                continue                      # erased; suppressed globally above
             local.append((f, mb))
             union |= mb
 
@@ -192,6 +245,19 @@ def main() -> None:
                 n_boxed += 1
                 area_boxed += area
 
+    if keep_unmatched:
+        for f in det.get("features", []):
+            if f["properties"].get("_used"):
+                continue
+            g = dict(f)
+            g["properties"] = {**{k: v for k, v in f["properties"].items()
+                                  if not k.startswith("_")},
+                               "source": "detected, unverified",
+                               "area_basis": "traced outline"}
+            feats.append(g)
+            n_unmatched += 1
+            area_traced += float(f["properties"].get("area_m2") or 0)
+
     total = area_traced + area_boxed + area_drawn
     out = {"type": "FeatureCollection",
            "properties": {
@@ -222,6 +288,8 @@ def main() -> None:
         print(f"  {n_killed} detections suppressed (marked wrong in the map UI)")
     print(f"{len(feats)} arrays in the survey")
     print(f"  {n_traced:4} detected      {area_traced:10,.0f} m2  (traced, measured)")
+    if n_unmatched:
+        print(f"  {n_unmatched:4} unverified    kept as seed (no label covers them yet)")
     if n_drawn:
         print(f"  {n_drawn:4} hand-drawn    {area_drawn:10,.0f} m2  (traced by you, authoritative)")
     print(f"  {n_boxed:4} hand-labelled {area_boxed:10,.0f} m2  (boxes, over-estimate)")

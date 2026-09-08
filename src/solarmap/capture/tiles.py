@@ -268,10 +268,34 @@ def source_from_config(cfg: Config, name: str) -> Source:
             f"Unknown tile source {name!r}. Configured: {', '.join(sources) or '(none)'}"
         )
     spec = dict(sources[name])
-    token = spec.pop("token", "") or ""
+    token = spec.pop("token", "") or _token_from_disk(name)
     if "{token}" in spec.get("url", "") and not token:
         raise SystemExit(
-            f"Tile source {name!r} needs an access token. Add `token:` under "
-            f"tile_sources.{name} in config.yaml."
+            f"Tile source {name!r} needs an access token. Put it in "
+            f"{name}.token beside config.yaml, or set {name.upper()}_TOKEN, "
+            f"or add `token:` under tile_sources.{name} in config.yaml."
         )
     return Source(name=name, token=token, **spec)
+
+
+def _token_from_disk(name: str) -> str:
+    """Find a token outside config.yaml.
+
+    config.yaml is tracked, so a token pasted there is one `git add -A` away
+    from being public forever -- and a leaked Mapbox token is billable. Both
+    locations checked here are already covered by .gitignore's `*.token` rule,
+    so the secret cannot be committed by accident.
+
+    Order: environment first (CI and one-off overrides), then the file.
+    """
+    import os
+
+    from ..config import REPO_ROOT
+
+    env = os.environ.get(f"{name.upper()}_TOKEN", "").strip()
+    if env:
+        return env
+    path = REPO_ROOT / f"{name}.token"
+    if path.is_file():
+        return path.read_text(encoding="utf-8").strip()
+    return ""

@@ -208,6 +208,13 @@ def main() -> None:
             if f["properties"].get("source") != "hand-labelled"]
     print(f"{len(boxed)} arrays to trace, {len(keep)} already traced")
     if not boxed:
+        # Write the survey through unchanged rather than returning. Callers
+        # chain build_survey_layer -> trace_known_arrays -> publish, and a
+        # missing output makes that chain publish nothing at all: on a capture
+        # with no fallback rectangles the map simply never updated, which reads
+        # as the whole Apply having done nothing.
+        (cap / args.out).write_text(json.dumps(survey), encoding="utf-8")
+        print(f"nothing to trace; passed through -> {cap / args.out}")
         return
 
     from solarmap.infer.predict import SolarDetector

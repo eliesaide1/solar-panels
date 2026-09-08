@@ -458,9 +458,14 @@ def apply_corrections(name: str, req: ApplyRequest):
         "labels_clean.json", "labels.json")
     if not labels:
         raise HTTPException(404, "No label file to start from.")
+    # Ordered most-processed first, ending at the raw seed. detections.geojson
+    # is deliberately last and only a fallback: it is this pipeline's own
+    # OUTPUT, so using it as the input feeds hand-drawn shapes back in as
+    # detections and compounds them on every run.
     dets = req.detections or _first_existing(
         cap, "detections_clipped.geojson", "detections_curated.geojson",
-        "detections_raw.geojson")
+        "detections_raw.geojson", "detections_seed.geojson",
+        "detections.geojson")
     if not dets:
         raise HTTPException(404, "No detection layer to build the survey from.")
 
