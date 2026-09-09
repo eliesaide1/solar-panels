@@ -3,11 +3,27 @@ __pycache__/
 .venv/
 venv/
 
-# Captured imagery and derived products can run to many GB
-data/captures/
+# Captured imagery and derived products can run to many GB. Written as
+# "ignore the contents, then re-include what matters" rather than "ignore the
+# directory": git does not descend into an excluded directory at all, so a
+# plain `data/` rule makes every negation below it dead -- the label files
+# stayed ignored no matter what was added.
+data/*
+!data/captures/
+data/captures/*
+!data/captures/*/
+data/captures/*/*
 data/datasets/
 data/outputs/
 data/raw/
+
+# The labels ARE the project. Jbeil's took days of hand review and Jounieh's
+# is days more; imagery re-downloads in minutes and checkpoints retrain, but a
+# label file cannot be reconstructed from anything. ~1.4 MB, and the only
+# artefact here that is genuinely irreplaceable.
+!data/captures/*/labels*.json
+!data/captures/*/corrections.geojson
+!data/captures/*/manifest.json
 
 # Model checkpoints. Note the .zip: a torch checkpoint IS a zip archive, and
 # downloads from Colab or Kaggle often arrive with that extension -- which
@@ -19,7 +35,6 @@ models/*.zip
 models/*.pkl
 models/archive/
 models/runs/
-data/
 
 # Never commit credentials
 *.token
