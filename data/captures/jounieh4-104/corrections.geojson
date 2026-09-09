@@ -2,9 +2,8 @@
  "type": "FeatureCollection",
  "properties": {
   "capture": "jounieh4-104",
-  "count": 612,
-  "note": "Hand corrections made in the map UI. Fold into labels with scripts/apply_corrections.py; nothing reads this file automatically.",
-  "applied_at": "2026-09-09T09:35:20"
+  "count": 620,
+  "note": "Hand corrections made in the map UI. Fold into labels with scripts/apply_corrections.py; nothing reads this file automatically."
  },
  "features": [
   {
@@ -44,7 +43,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -88,7 +87,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -132,7 +131,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -172,7 +171,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -212,7 +211,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -252,7 +251,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -292,7 +291,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -332,7 +331,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -372,7 +371,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -412,7 +411,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -456,7 +455,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -496,7 +495,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -540,7 +539,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -612,7 +611,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -664,7 +663,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -736,7 +735,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -768,7 +767,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -856,7 +855,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1080,7 +1079,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1124,7 +1123,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1168,7 +1167,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1212,7 +1211,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1276,7 +1275,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1568,7 +1567,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1648,7 +1647,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1696,7 +1695,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1776,7 +1775,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1844,7 +1843,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1908,7 +1907,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -1948,7 +1947,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2024,7 +2023,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2068,7 +2067,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2144,7 +2143,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2200,7 +2199,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2332,7 +2331,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2420,7 +2419,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2496,7 +2495,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2560,7 +2559,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2620,7 +2619,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2720,7 +2719,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2812,7 +2811,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -2888,7 +2887,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3092,7 +3091,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3148,7 +3147,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3200,7 +3199,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3236,7 +3235,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3376,7 +3375,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3440,7 +3439,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3528,7 +3527,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3672,7 +3671,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3756,7 +3755,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -3848,7 +3847,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -4520,7 +4519,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -4632,7 +4631,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -4724,7 +4723,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -4820,7 +4819,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5048,7 +5047,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5124,7 +5123,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5300,7 +5299,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5360,7 +5359,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5412,7 +5411,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5472,7 +5471,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5552,7 +5551,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5616,7 +5615,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5656,7 +5655,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5696,7 +5695,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5736,7 +5735,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5776,7 +5775,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -5964,7 +5963,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6076,7 +6075,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6188,7 +6187,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6232,7 +6231,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6360,7 +6359,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6440,7 +6439,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6504,7 +6503,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6712,7 +6711,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6864,7 +6863,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -6996,7 +6995,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7036,7 +7035,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7076,7 +7075,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7148,7 +7147,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7196,7 +7195,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7288,7 +7287,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7368,7 +7367,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7496,7 +7495,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7608,7 +7607,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7652,7 +7651,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7764,7 +7763,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -7952,7 +7951,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8016,7 +8015,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8224,7 +8223,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8376,7 +8375,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8416,7 +8415,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8548,7 +8547,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8588,7 +8587,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8636,7 +8635,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8708,7 +8707,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8800,7 +8799,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -8880,7 +8879,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9008,7 +9007,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9120,7 +9119,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9164,7 +9163,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9276,7 +9275,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9464,7 +9463,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9528,7 +9527,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9736,7 +9735,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -9888,7 +9887,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10020,7 +10019,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10060,7 +10059,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10100,7 +10099,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10148,7 +10147,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10220,7 +10219,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10312,7 +10311,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10376,7 +10375,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10664,7 +10663,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10740,7 +10739,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10928,7 +10927,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -10980,7 +10979,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11024,7 +11023,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11156,7 +11155,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11268,7 +11267,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11316,7 +11315,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11396,7 +11395,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11556,7 +11555,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11648,7 +11647,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11816,7 +11815,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11884,7 +11883,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -11924,7 +11923,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -12004,7 +12003,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -12144,7 +12143,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -12548,7 +12547,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -12752,7 +12751,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -12792,7 +12791,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -12876,7 +12875,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13108,7 +13107,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13224,7 +13223,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13352,7 +13351,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13396,7 +13395,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13544,7 +13543,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13616,7 +13615,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13668,7 +13667,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13752,7 +13751,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13856,7 +13855,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13932,7 +13931,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -13972,7 +13971,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -14028,7 +14027,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -14068,7 +14067,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -14120,7 +14119,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -14168,7 +14167,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -14748,7 +14747,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -14912,7 +14911,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15368,7 +15367,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15452,7 +15451,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15580,7 +15579,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15620,7 +15619,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15752,7 +15751,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15784,7 +15783,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15824,7 +15823,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15880,7 +15879,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -15980,7 +15979,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -16092,7 +16091,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -16400,7 +16399,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -16492,7 +16491,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -16552,7 +16551,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -16600,7 +16599,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -16988,7 +16987,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17052,7 +17051,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17092,7 +17091,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17164,7 +17163,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17224,7 +17223,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17416,7 +17415,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17464,7 +17463,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17544,7 +17543,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17620,7 +17619,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17668,7 +17667,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17708,7 +17707,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17780,7 +17779,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -17924,7 +17923,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18056,7 +18055,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18100,7 +18099,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18140,7 +18139,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18180,7 +18179,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18224,7 +18223,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18356,7 +18355,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18416,7 +18415,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18500,7 +18499,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18544,7 +18543,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18616,7 +18615,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18672,7 +18671,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18712,7 +18711,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18760,7 +18759,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18860,7 +18859,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18904,7 +18903,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18948,7 +18947,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -18988,7 +18987,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19032,7 +19031,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19072,7 +19071,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19128,7 +19127,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19232,7 +19231,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19292,7 +19291,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19376,7 +19375,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19620,7 +19619,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19700,7 +19699,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19768,7 +19767,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19824,7 +19823,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -19988,7 +19987,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20060,7 +20059,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20096,7 +20095,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20144,7 +20143,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20216,7 +20215,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20408,7 +20407,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20484,7 +20483,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -20832,7 +20831,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21012,7 +21011,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21104,7 +21103,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21144,7 +21143,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21196,7 +21195,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21264,7 +21263,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21396,7 +21395,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21452,7 +21451,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21508,7 +21507,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21652,7 +21651,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21696,7 +21695,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21784,7 +21783,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21888,7 +21887,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -21992,7 +21991,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22048,7 +22047,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22092,7 +22091,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22140,7 +22139,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22200,7 +22199,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22332,7 +22331,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22396,7 +22395,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22488,7 +22487,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22564,7 +22563,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22628,7 +22627,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22736,7 +22735,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22788,7 +22787,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22864,7 +22863,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -22948,7 +22947,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23096,7 +23095,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23156,7 +23155,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23276,7 +23275,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23404,7 +23403,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23484,7 +23483,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23544,7 +23543,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23696,7 +23695,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23748,7 +23747,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23916,7 +23915,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -23980,7 +23979,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24108,7 +24107,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24184,7 +24183,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24224,7 +24223,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24276,7 +24275,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24320,7 +24319,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24360,7 +24359,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24400,7 +24399,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24508,7 +24507,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24584,7 +24583,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24692,7 +24691,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24736,7 +24735,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24792,7 +24791,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24860,7 +24859,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24900,7 +24899,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -24944,7 +24943,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25004,7 +25003,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25044,7 +25043,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25104,7 +25103,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25316,7 +25315,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25388,7 +25387,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25476,7 +25475,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25552,7 +25551,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25648,7 +25647,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25716,7 +25715,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -25892,7 +25891,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26012,7 +26011,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26124,7 +26123,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26168,7 +26167,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26208,7 +26207,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26248,7 +26247,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26288,7 +26287,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26328,7 +26327,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26368,7 +26367,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26408,7 +26407,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26448,7 +26447,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26508,7 +26507,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26556,7 +26555,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26620,7 +26619,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26668,7 +26667,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26732,7 +26731,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26784,7 +26783,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26824,7 +26823,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -26908,7 +26907,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27032,7 +27031,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27168,7 +27167,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27216,7 +27215,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27392,7 +27391,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27448,7 +27447,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27620,7 +27619,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27668,7 +27667,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27768,7 +27767,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27892,7 +27891,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -27948,7 +27947,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28032,7 +28031,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28124,7 +28123,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28164,7 +28163,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28436,7 +28435,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28492,7 +28491,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28536,7 +28535,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28752,7 +28751,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28792,7 +28791,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28848,7 +28847,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28888,7 +28887,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28928,7 +28927,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -28988,7 +28987,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29084,7 +29083,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29208,7 +29207,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29288,7 +29287,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29356,7 +29355,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29396,7 +29395,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29464,7 +29463,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29516,7 +29515,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29556,7 +29555,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29660,7 +29659,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29708,7 +29707,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29760,7 +29759,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29808,7 +29807,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29852,7 +29851,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -29896,7 +29895,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30136,7 +30135,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30200,7 +30199,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30260,7 +30259,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30308,7 +30307,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30668,7 +30667,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30724,7 +30723,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30840,7 +30839,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -30972,7 +30971,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31028,7 +31027,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31108,7 +31107,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31148,7 +31147,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31188,7 +31187,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31392,7 +31391,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31472,7 +31471,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -31568,7 +31567,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32100,7 +32099,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32152,7 +32151,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32228,7 +32227,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32288,7 +32287,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32408,7 +32407,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32472,7 +32471,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32520,7 +32519,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32584,7 +32583,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32648,7 +32647,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32688,7 +32687,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32772,7 +32771,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -32932,7 +32931,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33056,7 +33055,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33108,7 +33107,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33196,7 +33195,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33332,7 +33331,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33396,7 +33395,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33440,7 +33439,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33484,7 +33483,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33540,7 +33539,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33724,7 +33723,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -33900,7 +33899,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34012,7 +34011,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34056,7 +34055,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34104,7 +34103,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34172,7 +34171,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34284,7 +34283,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34368,7 +34367,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34532,7 +34531,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34576,7 +34575,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34616,7 +34615,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34712,7 +34711,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34760,7 +34759,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34804,7 +34803,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -34956,7 +34955,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35088,7 +35087,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35132,7 +35131,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35224,7 +35223,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35268,7 +35267,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35308,7 +35307,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35476,7 +35475,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35612,7 +35611,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35712,7 +35711,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35788,7 +35787,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35884,7 +35883,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -35952,7 +35951,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36008,7 +36007,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36068,7 +36067,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36204,7 +36203,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36260,7 +36259,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36300,7 +36299,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36352,7 +36351,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36392,7 +36391,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36436,7 +36435,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36520,7 +36519,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36612,7 +36611,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36672,7 +36671,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36736,7 +36735,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36784,7 +36783,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36832,7 +36831,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -36872,7 +36871,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37052,7 +37051,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37104,7 +37103,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37232,7 +37231,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37296,7 +37295,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37344,7 +37343,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37444,7 +37443,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37524,7 +37523,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37564,7 +37563,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37692,7 +37691,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37788,7 +37787,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37844,7 +37843,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37884,7 +37883,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37924,7 +37923,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -37964,7 +37963,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38028,7 +38027,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38088,7 +38087,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38156,7 +38155,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38216,7 +38215,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38284,7 +38283,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38332,7 +38331,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38536,7 +38535,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38596,7 +38595,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38656,7 +38655,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38772,7 +38771,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -38920,7 +38919,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39044,7 +39043,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39096,7 +39095,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39284,7 +39283,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39524,7 +39523,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39800,7 +39799,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39860,7 +39859,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39900,7 +39899,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39944,7 +39943,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -39996,7 +39995,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40096,7 +40095,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40156,7 +40155,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40244,7 +40243,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40312,7 +40311,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40356,7 +40355,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40416,7 +40415,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40464,7 +40463,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40532,7 +40531,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40576,7 +40575,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40620,7 +40619,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40796,7 +40795,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40832,7 +40831,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40952,7 +40951,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -40992,7 +40991,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41052,7 +41051,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41096,7 +41095,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41204,7 +41203,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41444,7 +41443,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41492,7 +41491,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41548,7 +41547,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41724,7 +41723,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41776,7 +41775,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41832,7 +41831,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41884,7 +41883,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -41932,7 +41931,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42008,7 +42007,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42156,7 +42155,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42272,7 +42271,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42376,7 +42375,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42432,7 +42431,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42476,7 +42475,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42528,7 +42527,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42592,7 +42591,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42632,7 +42631,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42768,7 +42767,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42896,7 +42895,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -42956,7 +42955,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43024,7 +43023,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43128,7 +43127,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43172,7 +43171,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43212,7 +43211,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43364,7 +43363,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43524,7 +43523,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43572,7 +43571,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43656,7 +43655,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43704,7 +43703,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -43964,7 +43963,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44060,7 +44059,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44188,7 +44187,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44244,7 +44243,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44296,7 +44295,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44340,7 +44339,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44440,7 +44439,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44572,7 +44571,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44640,7 +44639,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44680,7 +44679,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44744,7 +44743,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44788,7 +44787,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -44996,7 +44995,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45040,7 +45039,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45080,7 +45079,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45180,7 +45179,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45220,7 +45219,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45268,7 +45267,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45536,7 +45535,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45588,7 +45587,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45712,7 +45711,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45816,7 +45815,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45920,7 +45919,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -45968,7 +45967,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46028,7 +46027,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46216,7 +46215,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46320,7 +46319,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46376,7 +46375,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46428,7 +46427,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46480,7 +46479,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46520,7 +46519,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46652,7 +46651,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46716,7 +46715,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46772,7 +46771,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46824,7 +46823,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46880,7 +46879,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -46960,7 +46959,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47052,7 +47051,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47104,7 +47103,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47144,7 +47143,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47184,7 +47183,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47232,7 +47231,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47292,7 +47291,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47444,7 +47443,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47500,7 +47499,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47672,7 +47671,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47788,7 +47787,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47840,7 +47839,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47928,7 +47927,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -47984,7 +47983,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48024,7 +48023,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48080,7 +48079,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48124,7 +48123,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48172,7 +48171,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48448,7 +48447,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48516,7 +48515,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48568,7 +48567,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48628,7 +48627,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48708,7 +48707,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48748,7 +48747,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48852,7 +48851,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -48956,7 +48955,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49000,7 +48999,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49076,7 +49075,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49132,7 +49131,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49184,7 +49183,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49224,7 +49223,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49364,7 +49363,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49428,7 +49427,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49520,7 +49519,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49656,7 +49655,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49708,7 +49707,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49784,7 +49783,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49852,7 +49851,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -49932,7 +49931,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50052,7 +50051,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50120,7 +50119,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50188,7 +50187,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50240,7 +50239,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50364,7 +50363,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50436,7 +50435,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50660,7 +50659,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50812,7 +50811,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50864,7 +50863,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -50932,7 +50931,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51000,7 +50999,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51116,7 +51115,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51184,7 +51183,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51288,7 +51287,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51364,7 +51363,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51456,7 +51455,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51500,7 +51499,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51612,7 +51611,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51884,7 +51883,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -51952,7 +51951,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52000,7 +51999,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52120,7 +52119,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52292,7 +52291,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52400,7 +52399,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52460,7 +52459,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52508,7 +52507,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52712,7 +52711,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52768,7 +52767,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52904,7 +52903,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -52960,7 +52959,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53000,7 +52999,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53076,7 +53075,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53144,7 +53143,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53184,7 +53183,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53228,7 +53227,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53328,7 +53327,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53388,7 +53387,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53912,7 +53911,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -53964,7 +53963,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54044,7 +54043,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54184,7 +54183,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54232,7 +54231,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54340,7 +54339,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54472,7 +54471,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54596,7 +54595,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54636,7 +54635,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54676,7 +54675,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54716,7 +54715,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54756,7 +54755,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -54920,7 +54919,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -55012,7 +55011,7 @@
     "kind": "add",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -55112,7 +55111,7 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
    }
   },
   {
@@ -55160,7 +55159,710 @@
     "kind": "remove",
     "note": "",
     "source": "hand-drawn",
-    "applied": "2026-09-09T09:35:20"
+    "applied": "2026-09-09T09:39:02"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.62128335237504,
+       33.97848088261135
+      ],
+      [
+       35.62118411064149,
+       33.97843862251175
+      ],
+      [
+       35.62121361494065,
+       33.97836967177787
+      ],
+      [
+       35.621259212493904,
+       33.9783607749049
+      ],
+      [
+       35.621248483657844,
+       33.978416380345635
+      ],
+      [
+       35.62131822109223,
+       33.97843862251175
+      ],
+      [
+       35.6212940812111,
+       33.978476434180806
+      ],
+      [
+       35.62128335237504,
+       33.97848088261135
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "add",
+    "note": "",
+    "source": "hand-drawn",
+    "applied": "2026-09-09T09:39:02"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.619216505529835,
+       33.97880855015139
+      ],
+      [
+       35.619209740549465,
+       33.97880200535918
+      ],
+      [
+       35.61920748555601,
+       33.97879172068468
+      ],
+      [
+       35.61921988802002,
+       33.97878237097952
+      ],
+      [
+       35.61922101551675,
+       33.97880107038883
+      ],
+      [
+       35.619224398006935,
+       33.97880294032955
+      ],
+      [
+       35.619216505529835,
+       33.97880855015139
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "remove",
+    "note": "",
+    "source": "hand-drawn",
+    "applied": "2026-09-09T09:39:02"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.61929204781066,
+       33.9788945673736
+      ],
+      [
+       35.61928415533355,
+       33.97888615264921
+      ],
+      [
+       35.61928528283029,
+       33.97887119313705
+      ],
+      [
+       35.619303322777945,
+       33.97884594895436
+      ],
+      [
+       35.61931347024851,
+       33.9788431440447
+      ],
+      [
+       35.61930896026159,
+       33.97884968883375
+      ],
+      [
+       35.61930783276487,
+       33.97886932319786
+      ],
+      [
+       35.61931685273869,
+       33.97887212810665
+      ],
+      [
+       35.61931685273869,
+       33.97887960786296
+      ],
+      [
+       35.61930670526813,
+       33.978885217679775
+      ],
+      [
+       35.61930219528122,
+       33.978892697434944
+      ],
+      [
+       35.61929204781066,
+       33.9788945673736
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "remove",
+    "note": "",
+    "source": "hand-drawn",
+    "applied": "2026-09-09T09:39:02"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.624039936535446,
+       33.98387126345502
+      ],
+      [
+       35.624015131607415,
+       33.9838693936258
+      ],
+      [
+       35.62401174911723,
+       33.983863784137924
+      ],
+      [
+       35.624009494123776,
+       33.983830127202836
+      ],
+      [
+       35.624015131607415,
+       33.98381797330633
+      ],
+      [
+       35.6240264065747,
+       33.98381610347595
+      ],
+      [
+       35.62402866156816,
+       33.983803014662094
+      ],
+      [
+       35.62403655404526,
+       33.9838030146621
+      ],
+      [
+       35.62403768154199,
+       33.98379366550813
+      ],
+      [
+       35.624047829012554,
+       33.98379086076172
+      ],
+      [
+       35.62404557401909,
+       33.98378525126864
+      ],
+      [
+       35.62406023147657,
+       33.98377777194398
+      ],
+      [
+       35.624085036404594,
+       33.98377216245005
+      ],
+      [
+       35.62408841889478,
+       33.983778706859624
+      ],
+      [
+       35.62408954639152,
+       33.983775902112725
+      ],
+      [
+       35.624094056378425,
+       33.98377683702836
+      ],
+      [
+       35.624095183875156,
+       33.983782446521985
+      ],
+      [
+       35.62410420384899,
+       33.98378151160641
+      ],
+      [
+       35.624110968829356,
+       33.983788056015236
+      ],
+      [
+       35.62410420384899,
+       33.98379834008524
+      ],
+      [
+       35.624094056378425,
+       33.98379740516983
+      ],
+      [
+       35.62408616390133,
+       33.9838058194081
+      ],
+      [
+       35.624087291398055,
+       33.983817038391145
+      ],
+      [
+       35.624094056378425,
+       33.98381703839115
+      ],
+      [
+       35.624095183875156,
+       33.983835736692946
+      ],
+      [
+       35.62410307635226,
+       33.983844150927396
+      ],
+      [
+       35.624096311371886,
+       33.98384976041659
+      ],
+      [
+       35.62409856636534,
+       33.98385817464967
+      ],
+      [
+       35.62408954639152,
+       33.98386378413794
+      ],
+      [
+       35.62408954639152,
+       33.983856304820144
+      ],
+      [
+       35.62408278141114,
+       33.98385817464967
+      ],
+      [
+       35.624079398920955,
+       33.98385163024623
+      ],
+      [
+       35.624071506443855,
+       33.98385350007583
+      ],
+      [
+       35.62406474146349,
+       33.98386284922324
+      ],
+      [
+       35.624039936535446,
+       33.98387126345502
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "remove",
+    "note": "",
+    "source": "hand-drawn"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.62532641030298,
+       33.98626648090007
+      ],
+      [
+       35.62532415530953,
+       33.98625993668207
+      ],
+      [
+       35.62532866529644,
+       33.98625619712871
+      ],
+      [
+       35.62532415530953,
+       33.98625619712872
+      ],
+      [
+       35.6253230278128,
+       33.986250587798345
+      ],
+      [
+       35.62532077281934,
+       33.986214127142
+      ],
+      [
+       35.62532641030298,
+       33.98621412714199
+      ],
+      [
+       35.62532415530953,
+       33.986222541141004
+      ],
+      [
+       35.62532866529644,
+       33.98622908536188
+      ],
+      [
+       35.62532415530953,
+       33.986230955139185
+      ],
+      [
+       35.625330920289905,
+       33.98623189002781
+      ],
+      [
+       35.625330920289905,
+       33.98623936913653
+      ],
+      [
+       35.62534896023755,
+       33.98624123891361
+      ],
+      [
+       35.625330920289905,
+       33.986245913356115
+      ],
+      [
+       35.62533430278009,
+       33.9862618064587
+      ],
+      [
+       35.62532641030298,
+       33.98626648090007
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "remove",
+    "note": "",
+    "source": "hand-drawn"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.62531175284551,
+       33.986269285564774
+      ],
+      [
+       35.625302732871674,
+       33.986262741347005
+      ],
+      [
+       35.62531062534878,
+       33.98625619712872
+      ],
+      [
+       35.62530949785205,
+       33.986251522686786
+      ],
+      [
+       35.62529935038149,
+       33.98625152268678
+      ],
+      [
+       35.625295967891304,
+       33.98625619712872
+      ],
+      [
+       35.62527905544037,
+       33.98625619712872
+      ],
+      [
+       35.62527680044692,
+       33.98625245757518
+      ],
+      [
+       35.62528243793056,
+       33.98624965290993
+      ],
+      [
+       35.62527905544037,
+       33.98624497846763
+      ],
+      [
+       35.62528356542728,
+       33.98624123891361
+      ],
+      [
+       35.62527792794364,
+       33.98624123891361
+      ],
+      [
+       35.625274545453465,
+       33.986236564470836
+      ],
+      [
+       35.62526778047309,
+       33.98624404357914
+      ],
+      [
+       35.62527003546654,
+       33.986245913356115
+      ],
+      [
+       35.62526214298944,
+       33.98624497846761
+      ],
+      [
+       35.62526778047309,
+       33.98623189002783
+      ],
+      [
+       35.625286947917466,
+       33.98623375980506
+      ],
+      [
+       35.625288075414204,
+       33.986230955139185
+      ],
+      [
+       35.625280182937104,
+       33.986222541141
+      ],
+      [
+       35.62526214298944,
+       33.98622347602973
+      ],
+      [
+       35.62525988799598,
+       33.98621786669722
+      ],
+      [
+       35.62528243793056,
+       33.986215996919626
+      ],
+      [
+       35.625286947917466,
+       33.986220671363526
+      ],
+      [
+       35.625298222884766,
+       33.98621973647477
+      ],
+      [
+       35.62529709538803,
+       33.98622908536188
+      ],
+      [
+       35.62529258540112,
+       33.98623095513919
+      ],
+      [
+       35.625294840394574,
+       33.98623375980505
+      ],
+      [
+       35.625304987865135,
+       33.98623189002782
+      ],
+      [
+       35.62531851782588,
+       33.986234694693664
+      ],
+      [
+       35.62531851782588,
+       33.9862608715704
+      ],
+      [
+       35.62531175284551,
+       33.986269285564774
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "remove",
+    "note": "",
+    "source": "hand-drawn"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.61720956135265,
+       33.986214127142006
+      ],
+      [
+       35.617194903895175,
+       33.98621132247549
+      ],
+      [
+       35.617196031391906,
+       33.98620758291996
+      ],
+      [
+       35.61719039390826,
+       33.986204778253246
+      ],
+      [
+       35.617193776398445,
+       33.98619542936345
+      ],
+      [
+       35.617203923869006,
+       33.98619262469631
+      ],
+      [
+       35.61720617886247,
+       33.98618234091601
+      ],
+      [
+       35.61721294384284,
+       33.98618234091601
+      ],
+      [
+       35.61721745382975,
+       33.986174861802304
+      ],
+      [
+       35.61722083631994,
+       33.98618421069433
+      ],
+      [
+       35.6172230913134,
+       33.98617953624842
+      ],
+      [
+       35.61724564124797,
+       33.986183275805175
+      ],
+      [
+       35.617249023738154,
+       33.986179536248436
+      ],
+      [
+       35.61725578871853,
+       33.98617953624843
+      ],
+      [
+       35.61725578871853,
+       33.98616457801983
+      ],
+      [
+       35.61726142620217,
+       33.986167382687874
+      ],
+      [
+       35.617265936189085,
+       33.986164578019846
+      ],
+      [
+       35.617265936189085,
+       33.98615990357285
+      ],
+      [
+       35.61726029870544,
+       33.986157098904535
+      ],
+      [
+       35.617268191182546,
+       33.98614775000951
+      ],
+      [
+       35.617263681195624,
+       33.986139336003085
+      ],
+      [
+       35.617270446176,
+       33.986133726665024
+      ],
+      [
+       35.61727608365965,
+       33.98613466155473
+      ],
+      [
+       35.617290741117124,
+       33.986128117326594
+      ],
+      [
+       35.617313291051694,
+       33.98612998710611
+      ],
+      [
+       35.61731892853533,
+       33.98612624754701
+      ],
+      [
+       35.61733245849608,
+       33.98612624754701
+      ],
+      [
+       35.61733245849608,
+       33.986214127142006
+      ],
+      [
+       35.61720956135265,
+       33.986214127142006
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "remove",
+    "note": "",
+    "source": "hand-drawn"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.61726540327073,
+       33.98618966299695
+      ],
+      [
+       35.617340505123146,
+       33.986200783063744
+      ],
+      [
+       35.61734318733216,
+       33.98614295870041
+      ],
+      [
+       35.61727613210679,
+       33.98613628665595
+      ],
+      [
+       35.6172600388527,
+       33.98618966299695
+      ],
+      [
+       35.61726540327073,
+       33.98618966299695
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "kind": "add",
+    "note": "",
+    "source": "hand-drawn"
    }
   }
  ]
